@@ -32,11 +32,11 @@ use App\Http\Controllers\EmployeeController;
 |
 */
 
-Route::get('countrys', [CountryController::class, 'index']);
-Route::post('countrys', [CountryController::class, 'store']);
-Route::get('countrys/{country}', [CountryController::class, 'show']);
-Route::put('countrys/{country}', [CountryController::class, 'update']);
-Route::delete('countrys/{country}', [CountryController::class, 'destroy']);
+Route::get('countries', [CountryController::class, 'index']);
+Route::post('countries', [CountryController::class, 'store']);
+Route::get('countries/{country}', [CountryController::class, 'show']);
+Route::put('countries/{country}', [CountryController::class, 'update']);
+Route::delete('countries/{country}', [CountryController::class, 'destroy']);
 
 Route::get('roles', [RoleController::class, 'index']);
 Route::post('roles', [RoleController::class, 'store']);

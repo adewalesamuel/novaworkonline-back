@@ -16,9 +16,9 @@ class CreateJobTitlesTable extends Migration
         Schema::create('jobtitles', function (Blueprint $table) {
             $table->id();
 			$table->string('name');
-			$table->string('slug');
-			$table->text('description');
-			$table->string('icon_url');
+			$table->string('slug')->unique();
+			$table->text('description')->nullable()->default('');
+			$table->string('icon_url')->nullable();
 			$table->softDeletes();
 			$table->timestamps();
         });

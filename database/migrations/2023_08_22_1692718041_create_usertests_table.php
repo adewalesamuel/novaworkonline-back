@@ -15,11 +15,15 @@ class CreateUserTestsTable extends Migration
     {
         Schema::create('usertests', function (Blueprint $table) {
             $table->id();
-			$table->string('test_id');
-			$table->string('user_id');
-			$table->enum('status');
-			$table->integer('current_step');
-			$table->integer('score');
+            $table->foreignId('test_id')
+			->constrained()
+			->onDelete('cascade');
+            $table->foreignId('user_id')
+			->constrained()
+			->onDelete('cascade');
+			$table->enum('status', ['pending', 'finished'])->default('pending');
+			$table->integer('current_step')->default(0);
+			$table->integer('score'); //percent
 			$table->softDeletes();
 			$table->timestamps();
         });

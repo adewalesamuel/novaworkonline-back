@@ -15,18 +15,15 @@ class CreateInterviewRequestsTable extends Migration
     {
         Schema::create('interviewrequests', function (Blueprint $table) {
             $table->id();
-			$table->enum('status');
-			$table->foreignId('recruteur_id')
+			$table->enum('status', ['pending', 'validated', 'rejected'])->default('pending');
+			$table->foreignId('recruiter_id')
 			->constrained()
 			->onDelete('cascade');
 			$table->foreignId('user_id')
 			->constrained()
 			->onDelete('cascade');
 			$table->string('slug');
-			$table->text('description');
-			$table->foreignId('recruiter_id')
-			->constrained()
-			->onDelete('cascade');
+			$table->text('description')->nullable()->default('');
 			$table->softDeletes();
 			$table->timestamps();
         });

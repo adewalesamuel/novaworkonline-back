@@ -19,7 +19,7 @@ class CountryController extends Controller
     {
         $data = [
             'success' => true,
-            'countrys' => Country::where('id', '>', -1)
+            'countries' => Country::where('id', '>', -1)
             ->orderBy('created_at', 'desc')->get()
         ];
 
@@ -52,14 +52,14 @@ class CountryController extends Controller
 		$country->code = $validated['code'] ?? null;
 		$country->phone_code = $validated['phone_code'] ?? null;
 		$country->flag_icon_url = $validated['flag_icon_url'] ?? null;
-		
+
         $country->save();
 
         $data = [
             'success'       => true,
             'country'   => $country
         ];
-        
+
         return response()->json($data);
     }
 
@@ -105,14 +105,14 @@ class CountryController extends Controller
 		$country->code = $validated['code'] ?? null;
 		$country->phone_code = $validated['phone_code'] ?? null;
 		$country->flag_icon_url = $validated['flag_icon_url'] ?? null;
-		
+
         $country->save();
 
         $data = [
             'success'       => true,
             'country'   => $country
         ];
-        
+
         return response()->json($data);
     }
 
@@ -123,7 +123,7 @@ class CountryController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(Country $country)
-    {   
+    {
         $country->delete();
 
         $data = [

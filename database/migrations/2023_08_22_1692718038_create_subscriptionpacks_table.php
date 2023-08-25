@@ -16,11 +16,11 @@ class CreateSubscriptionPacksTable extends Migration
         Schema::create('subscriptionpacks', function (Blueprint $table) {
             $table->id();
 			$table->string('name');
-			$table->string('slug');
-			$table->text('description');
+			$table->string('slug')->unique();
+			$table->text('description')->nullable()->default();
 			$table->integer('price');
-			$table->integer('duration');
-			$table->enum('type');
+			$table->integer('duration');//month
+			$table->enum('type', ['user', 'recruiter']);
 			$table->softDeletes();
 			$table->timestamps();
         });

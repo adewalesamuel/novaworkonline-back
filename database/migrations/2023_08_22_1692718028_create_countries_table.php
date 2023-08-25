@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCountrysTable extends Migration
+class CreateCountriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreateCountrysTable extends Migration
      */
     public function up()
     {
-        Schema::create('countrys', function (Blueprint $table) {
+        Schema::create('countries', function (Blueprint $table) {
             $table->id();
 			$table->string('name');
-			$table->string('code');
-			$table->string('phone_code');
-			$table->string('flag_icon_url');
+			$table->string('code')->unique();
+			$table->string('phone_code')->unique();
+			$table->string('flag_icon_url')->nullable();
 			$table->softDeletes();
 			$table->timestamps();
         });
@@ -31,6 +31,6 @@ class CreateCountrysTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('countrys');
+        Schema::dropIfExists('countries');
     }
 }

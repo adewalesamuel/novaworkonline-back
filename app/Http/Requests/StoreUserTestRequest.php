@@ -24,12 +24,8 @@ class StoreUserTestRequest extends FormRequest
     public function rules()
     {
         return [
-            'test_id' => 'required|string',
-			'user_id' => 'required|string',
-			'status' => 'required|string',
-			'current_step' => 'required|integer',
-			'score' => 'required|integer',
-			
+            'test_id' => 'required|integer|exists:tests',
+			'user_id' => 'nullable|integer|exists:users',
         ];
     }
 }

@@ -24,10 +24,10 @@ class StoreEmployeeRequest extends FormRequest
     public function rules()
     {
         return [
-            'user_id' => 'required|integer',
-			'recruteur_id' => 'required|integer',
-			'project_id' => 'required|integer',
-			
+            'user_id' => 'required|integer|exists:users',
+			'recruiter_id' => 'nullable|integer|exists:recruiters',
+			'project_id' => 'required|integer|exists:users',
+
         ];
     }
 }

@@ -25,10 +25,9 @@ class StoreTestRequest extends FormRequest
     {
         return [
             'name' => 'required|string',
-			'slug' => 'required|string',
-			'description' => 'required|string',
-			'cotent' => 'required|string',
-			
+			'description' => 'nullable|string',
+			'cotent' => 'requied|json',
+
         ];
     }
 }

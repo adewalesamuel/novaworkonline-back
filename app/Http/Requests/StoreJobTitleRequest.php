@@ -25,10 +25,9 @@ class StoreJobTitleRequest extends FormRequest
     {
         return [
             'name' => 'required|string',
-			'slug' => 'required|string',
-			'description' => 'required|string',
-			'icon_url' => 'required|string',
-			
+			'description' => 'nullable|string',
+			'icon_url' => 'nullable|string',
+
         ];
     }
 }

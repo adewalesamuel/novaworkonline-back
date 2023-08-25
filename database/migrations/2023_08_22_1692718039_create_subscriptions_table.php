@@ -15,12 +15,15 @@ class CreateSubscriptionsTable extends Migration
     {
         Schema::create('subscriptions', function (Blueprint $table) {
             $table->id();
-			$table->enum('type');
+			$table->enum('type', ['user', 'recruiter']);
 			$table->integer('amount');
-			$table->enum('payment_mode');
-			$table->boolean('payment_status');
-			$table->date('expiration_date');
-			$table->integer('subscriber_id');
+			$table->enum('payment_mode', ['mobile', 'card', 'cash', 'other']);
+			$table->enum('payment_status', ['pending', 'valdated', 'failed'])->default('pending');
+			$table->date('expiration_date'); //current month + pack duration
+			$table->bigInteger('subscriber_id');
+            $table->foreignId('subscriptionpack_id')
+			->constrained()
+			->onDelete('cascade');
 			$table->softDeletes();
 			$table->timestamps();
         });

@@ -25,9 +25,9 @@ class StoreUserCourseRequest extends FormRequest
     {
         return [
             'progress' => 'required|integer',
-			'course_id' => 'required|integer',
-			'user_id' => 'required|integer',
-			
+			'course_id' => 'required|integer||exists:courses',
+			'user_id' => 'nullable|integer',
+
         ];
     }
 }

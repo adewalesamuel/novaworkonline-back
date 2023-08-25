@@ -24,10 +24,10 @@ class StoreResumeRequest extends FormRequest
     public function rules()
     {
         return [
-            'content' => 'required|string',
-			'params' => 'required|string',
-			'user_id' => 'required|integer',
-			
+            'content' => 'required|json',
+			'params' => 'required|json',
+			'user_id' => 'nullable|integer|exists:users',
+
         ];
     }
 }

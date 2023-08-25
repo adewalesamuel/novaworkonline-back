@@ -49,19 +49,19 @@ class InterviewRequestController extends Controller
         $interviewrequest = new InterviewRequest;
 
         $interviewrequest->status = $validated['status'] ?? null;
-		$interviewrequest->recruteur_id = $validated['recruteur_id'] ?? null;
+		$interviewrequest->recruiter_id = $validated['recruiter_id'] ?? null;
 		$interviewrequest->user_id = $validated['user_id'] ?? null;
 		$interviewrequest->slug = $validated['slug'] ?? null;
 		$interviewrequest->description = $validated['description'] ?? null;
 		$interviewrequest->recruiter_id = $validated['recruiter_id'] ?? null;
-		
+
         $interviewrequest->save();
 
         $data = [
             'success'       => true,
             'interviewrequest'   => $interviewrequest
         ];
-        
+
         return response()->json($data);
     }
 
@@ -104,19 +104,19 @@ class InterviewRequestController extends Controller
         $validated = $request->validated();
 
         $interviewrequest->status = $validated['status'] ?? null;
-		$interviewrequest->recruteur_id = $validated['recruteur_id'] ?? null;
+		$interviewrequest->recruiter_id = $validated['recruiter_id'] ?? null;
 		$interviewrequest->user_id = $validated['user_id'] ?? null;
 		$interviewrequest->slug = $validated['slug'] ?? null;
 		$interviewrequest->description = $validated['description'] ?? null;
 		$interviewrequest->recruiter_id = $validated['recruiter_id'] ?? null;
-		
+
         $interviewrequest->save();
 
         $data = [
             'success'       => true,
             'interviewrequest'   => $interviewrequest
         ];
-        
+
         return response()->json($data);
     }
 
@@ -127,7 +127,7 @@ class InterviewRequestController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(InterviewRequest $interviewrequest)
-    {   
+    {
         $interviewrequest->delete();
 
         $data = [

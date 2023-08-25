@@ -24,13 +24,12 @@ class StoreSubscriptionPackRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string',
-			'slug' => 'required|string',
-			'description' => 'required|string',
+            'name' => 'nullable|string',
+			'description' => 'nullable|string',
 			'price' => 'required|integer',
 			'duration' => 'required|integer',
 			'type' => 'required|string',
-			
+
         ];
     }
 }

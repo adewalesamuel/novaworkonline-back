@@ -18,7 +18,7 @@ class CreateEmployeesTable extends Migration
 			$table->foreignId('user_id')
 			->constrained()
 			->onDelete('cascade');
-			$table->foreignId('recruteur_id')
+			$table->foreignId('recruiter_id')
 			->constrained()
 			->onDelete('cascade');
 			$table->foreignId('project_id')

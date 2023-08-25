@@ -25,10 +25,9 @@ class StoreProjectRequest extends FormRequest
     {
         return [
             'name' => 'required|string',
-			'slug' => 'required|string',
-			'description' => 'required|string',
-			'recruiter_id' => 'required|integer',
-			
+			'description' => 'nullable|string',
+			'recruiter_id' => 'nullable|integer||exists:recruiters',
+
         ];
     }
 }

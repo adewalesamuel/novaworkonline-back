@@ -25,12 +25,12 @@ class UpdateInterviewRequestRequest extends FormRequest
     {
         return [
             'status' => 'required|string',
-			'recruteur_id' => 'required|integer',
+			'recruiter_id' => 'required|integer',
 			'user_id' => 'required|integer',
 			'slug' => 'required|string',
 			'description' => 'required|string',
 			'recruiter_id' => 'required|integer',
-			
+
         ];
     }
 }

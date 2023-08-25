@@ -15,24 +15,26 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-			$table->string('firstname');
-			$table->string('lastname');
-			$table->string('email');
+			$table->string('firstname')->nullable()->default('');
+			$table->string('lastname')->nullable()->default('');
+			$table->string('email')->unique();
 			$table->string('password');
-			$table->date('birth_date');
-			$table->string('gender');
-			$table->string('phone_number');
-			$table->string('city');
-			$table->string('profil_img_url');
+			$table->date('birth_date')->nullable();
+			$table->enum('gender', ['M', 'F', 'O'])->nullable();
+			$table->string('phone_number')->nullable()->default('');
+			$table->string('city')->nullable()->default('');
+			$table->string('profil_img_url')->nullable()->default('');
 			$table->string('api_token');
-			$table->boolean('is_active');
-			$table->boolean('is_qualified');
+			$table->boolean('is_active')->default(true);
+			$table->boolean('is_qualified')->default(false);
 			$table->foreignId('country_id')
+            ->nullable()
 			->constrained()
-			->onDelete('cascade');
+			->nullOnDelete();
 			$table->foreignId('jobtitle_id')
+            ->nullable()
 			->constrained()
-			->onDelete('cascade');
+			->nullOnDelete();
 			$table->timestamp('email_verified_at')->nullable();
 			$table->rememberToken();
 			$table->softDeletes();

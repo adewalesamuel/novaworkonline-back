@@ -24,13 +24,11 @@ class StoreInterviewRequestRequest extends FormRequest
     public function rules()
     {
         return [
-            'status' => 'required|string',
-			'recruteur_id' => 'required|integer',
-			'user_id' => 'required|integer',
-			'slug' => 'required|string',
-			'description' => 'required|string',
-			'recruiter_id' => 'required|integer',
-			
+			'recruiter_id' => 'required|integer||exists:users',
+			'user_id' => 'required|integer||exists:users',
+			'description' => 'nullable|string',
+			'recruiter_id' => 'nullable|integer||exists:users',
+
         ];
     }
 }

@@ -15,7 +15,7 @@ class CreateUserCoursesTable extends Migration
     {
         Schema::create('usercourses', function (Blueprint $table) {
             $table->id();
-			$table->integer('progress');
+			$table->integer('progress')->default(0);
 			$table->foreignId('course_id')
 			->constrained()
 			->onDelete('cascade');

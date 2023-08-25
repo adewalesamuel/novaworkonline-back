@@ -16,12 +16,12 @@ class CreateLessonsTable extends Migration
         Schema::create('lessons', function (Blueprint $table) {
             $table->id();
 			$table->string('name');
-			$table->string('slug');
-			$table->text('description');
-			$table->text('content');
-			$table->enum('type');
-			$table->string('estimated_length');
-			$table->string('cover_img_url');
+			$table->string('slug')->unique();
+			$table->text('description')->nullable()->default('');
+			$table->text('content')->nullable()->default('');
+			$table->enum('type', ['text', 'video', 'multi'])->default('text');
+			$table->string('estimated_length')->nullable();
+			$table->string('cover_img_url')->nullable()->default('');
 			$table->foreignId('course_id')
 			->constrained()
 			->onDelete('cascade');

@@ -15,22 +15,23 @@ class CreateRecruitersTable extends Migration
     {
         Schema::create('recruiters', function (Blueprint $table) {
             $table->id();
-			$table->string('firstname');
-			$table->string('lastname');
-			$table->string('email');
+			$table->string('firstname')->nullable()->default('');
+			$table->string('lastname')->nullable()->default('');
+			$table->string('email')->unique();
 			$table->string('password');
-			$table->date('birth_date');
-			$table->string('gender');
-			$table->string('phone_number');
-			$table->string('location');
-			$table->string('profil_img_url');
+			$table->date('birth_date')->nullable();
+			$table->enum('gender', ['M', 'F', 'O'])->nullable();
+			$table->string('phone_number')->nullable()->default('');
+			$table->string('location')->nullable()->default('');
+			$table->string('profil_img_url')->nullable()->default('');
 			$table->string('company_name');
-			$table->string('company_info');
+			$table->string('company_info')->nullable()->default('');
 			$table->string('api_token');
-			$table->boolean('is_active');
+			$table->boolean('is_active')->dafault(true);
 			$table->foreignId('country_id')
+            ->nullable()
 			->constrained()
-			->onDelete('cascade');
+			->nullOnDelete('');
 			$table->softDeletes();
 			$table->timestamps();
         });

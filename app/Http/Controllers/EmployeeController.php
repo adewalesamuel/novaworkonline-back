@@ -49,16 +49,16 @@ class EmployeeController extends Controller
         $employee = new Employee;
 
         $employee->user_id = $validated['user_id'] ?? null;
-		$employee->recruteur_id = $validated['recruteur_id'] ?? null;
+		$employee->recruiter_id = $validated['recruiter_id'] ?? null;
 		$employee->project_id = $validated['project_id'] ?? null;
-		
+
         $employee->save();
 
         $data = [
             'success'       => true,
             'employee'   => $employee
         ];
-        
+
         return response()->json($data);
     }
 
@@ -101,16 +101,16 @@ class EmployeeController extends Controller
         $validated = $request->validated();
 
         $employee->user_id = $validated['user_id'] ?? null;
-		$employee->recruteur_id = $validated['recruteur_id'] ?? null;
+		$employee->recruiter_id = $validated['recruiter_id'] ?? null;
 		$employee->project_id = $validated['project_id'] ?? null;
-		
+
         $employee->save();
 
         $data = [
             'success'       => true,
             'employee'   => $employee
         ];
-        
+
         return response()->json($data);
     }
 
@@ -121,7 +121,7 @@ class EmployeeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(Employee $employee)
-    {   
+    {
         $employee->delete();
 
         $data = [

@@ -25,9 +25,8 @@ class StoreRoleRequest extends FormRequest
     {
         return [
             'name' => 'required|string',
-			'slug' => 'required|string',
-			'permissions' => 'required|string',
-			
+			'permissions' => 'nullable|string',
+
         ];
     }
 }

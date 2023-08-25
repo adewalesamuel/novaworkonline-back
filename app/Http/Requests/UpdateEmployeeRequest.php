@@ -25,9 +25,9 @@ class UpdateEmployeeRequest extends FormRequest
     {
         return [
             'user_id' => 'required|integer',
-			'recruteur_id' => 'required|integer',
+			'recruiter_id' => 'required|integer',
 			'project_id' => 'required|integer',
-			
+
         ];
     }
 }

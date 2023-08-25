@@ -27,10 +27,10 @@ class StoreSubscriptionRequest extends FormRequest
             'type' => 'required|string',
 			'amount' => 'required|integer',
 			'payment_mode' => 'required|string',
-			'payment_status' => 'required|boolean',
+			'payment_status' => 'nullable|boolean',
 			'expiration_date' => 'required|date',
-			'subscriber_id' => 'required|integer',
-			
+			'subscriber_id' => 'nullable|integer',
+
         ];
     }
 }

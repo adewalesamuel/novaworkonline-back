@@ -25,13 +25,12 @@ class StoreCourseRequest extends FormRequest
     {
         return [
             'name' => 'required|string',
-			'slug' => 'required|string',
-			'description' => 'required|string',
-			'estimated_length' => 'required|string',
-			'lesson_length' => 'required|integer',
-			'cover_img_url' => 'required|string',
-			'author' => 'required|string',
-			
+			'description' => 'nullable|string',
+			'estimated_length' => 'nullable|string',
+			'lesson_length' => 'nullable|integer',
+			'cover_img_url' => 'nullable|string',
+			'author' => 'nullable|string',
+
         ];
     }
 }
