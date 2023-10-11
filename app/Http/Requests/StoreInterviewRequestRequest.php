@@ -27,7 +27,6 @@ class StoreInterviewRequestRequest extends FormRequest
 			'recruiter_id' => 'required|integer||exists:users',
 			'user_id' => 'required|integer||exists:users',
 			'description' => 'nullable|string',
-			'recruiter_id' => 'nullable|integer||exists:users',
 
         ];
     }

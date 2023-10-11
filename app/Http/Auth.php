@@ -3,50 +3,51 @@
 namespace App\Http;
 
 use Illuminate\Http\Request;
-use App\Models\Client;
-use App\Models\Artisan;
+use App\Models\User;
+use App\Models\Recruiter;
 use App\Models\Admin;
 
 
 class Auth {
     public const ADMIN = "admin";
-    public const CLIENT = "client";
-    public const ARTISAN = "artisan";
+    public const USER = "user";
+    public const RECRUITER = "recruiter";
 
-    public static function getUser(Request $request, string $type='client')
-    {   
-        $token = $request->header('Authorization') ? explode(" ", $request->header('Authorization'))[1] : null;
+    public static function getUser(Request $request, string $type='user')
+    {
+        $token = $request->header('Authorization') ?
+        explode(" ", $request->header('Authorization'))[1] : null;
         $user = null;
 
         switch ($type) {
             case self::ADMIN:
                 $user = self::getAdminByToken($token);
                 break;
-            case self::ARTISAN:
+            case self::RECRUITER:
                 $user = self::getArtisanByToken($token);
                 break;
             default:
-                $user = self::getClientByToken($token);
+                $user = self::getUserByToken($token);
                 break;
         }
 
         return $user;
     }
 
-    private static function getAdminByToken(string $token) 
+    private static function getAdminByToken(string $token)
     {
         return Admin::where('api_token', $token)->first();
     }
 
-    private static function getClientByToken(string $token)
+    private static function getUserByToken(string $token)
     {
-        return Client::where('api_token', $token)->first();
-   
+        return User::where('api_token', $token)->first();
+
     }
 
-    private static function getArtisanByToken(string $token) 
+    private static function getArtisanByToken(string $token)
     {
-        return Artisan::where('api_token', $token)->first();
+        return Recruiter::where('api_token', $token)->first();
     }
-    
+
 }

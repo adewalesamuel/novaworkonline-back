@@ -31,7 +31,7 @@ class CreateUsersTable extends Migration
             ->nullable()
 			->constrained()
 			->nullOnDelete();
-			$table->foreignId('jobtitle_id')
+			$table->foreignId('job_title_id')
             ->nullable()
 			->constrained()
 			->nullOnDelete();

@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests\StoreUserTestRequest;
 use App\Http\Requests\UpdateUserTestRequest;
 use Illuminate\Support\Str;
+use App\Http\Auth;
+
 
 
 class UserTestController extends Controller
@@ -19,7 +21,7 @@ class UserTestController extends Controller
     {
         $data = [
             'success' => true,
-            'usertests' => UserTest::where('id', '>', -1)
+            'user_tests' => UserTest::where('id', '>', -1)
             ->orderBy('created_at', 'desc')->get()
         ];
 
@@ -46,35 +48,84 @@ class UserTestController extends Controller
     {
         $validated = $request->validated();
 
-        $usertest = new UserTest;
+        $user_test = new UserTest;
 
-        $usertest->test_id = $validated['test_id'] ?? null;
-		$usertest->user_id = $validated['user_id'] ?? null;
-		$usertest->status = $validated['status'] ?? null;
-		$usertest->current_step = $validated['current_step'] ?? null;
-		$usertest->score = $validated['score'] ?? null;
-		
-        $usertest->save();
+        $user_test->test_id = $validated['test_id'] ?? null;
+		$user_test->user_id = $validated['user_id'] ?? null;
+		$user_test->status = $validated['status'] ?? null;
+		$user_test->current_step = $validated['current_step'] ?? null;
+		$user_test->score = $validated['score'] ?? null;
+
+        $user_test->save();
 
         $data = [
             'success'       => true,
-            'usertest'   => $usertest
+            'user_test'   => $user_test
         ];
-        
+
+        return response()->json($data);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function user_store(StoreUserTestRequest $request)
+    {
+        $validated = $request->validated();
+        $user = Auth::getUser($request, Auth::USER);
+
+        $user_test = new UserTest;
+
+        $user_test->test_id = $validated['test_id'] ?? null;
+		$user_test->user_id = $user->id;
+		$user_test->status = 'finished';
+		$user_test->current_step = $validated['current_step'] ?? null;
+		$user_test->score = $validated['score'] ?? null;
+
+        $user_test->save();
+
+        $data = [
+            'success'       => true,
+            'user_test'   => $user_test
+        ];
+
         return response()->json($data);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\UserTest  $usertest
+     * @param  \App\Models\UserTest  $user_test
      * @return \Illuminate\Http\Response
      */
-    public function show(UserTest $usertest)
+    public function user_show(Request $request)
+    {
+        $user = Auth::getUser($request, Auth::USER);
+        $user_test = UserTest::where('user_id', $user->id)
+        ->orderBy('created_at', 'desc')->firstOrFail();
+
+        $data = [
+            'success' => true,
+            'user_test' => $user_test
+        ];
+
+        return response()->json($data);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\UserTest  $user_test
+     * @return \Illuminate\Http\Response
+     */
+    public function show(UserTest $user_test)
     {
         $data = [
             'success' => true,
-            'usertest' => $usertest
+            'user_test' => $user_test
         ];
 
         return response()->json($data);
@@ -83,10 +134,10 @@ class UserTestController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\UserTest  $usertest
+     * @param  \App\Models\UserTest  $user_test
      * @return \Illuminate\Http\Response
      */
-    public function edit(UserTest $usertest)
+    public function edit(UserTest $user_test)
     {
         //
     }
@@ -95,42 +146,42 @@ class UserTestController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\UserTest  $usertest
+     * @param  \App\Models\UserTest  $user_test
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateUserTestRequest $request, UserTest $usertest)
+    public function update(UpdateUserTestRequest $request, UserTest $user_test)
     {
         $validated = $request->validated();
 
-        $usertest->test_id = $validated['test_id'] ?? null;
-		$usertest->user_id = $validated['user_id'] ?? null;
-		$usertest->status = $validated['status'] ?? null;
-		$usertest->current_step = $validated['current_step'] ?? null;
-		$usertest->score = $validated['score'] ?? null;
-		
-        $usertest->save();
+        $user_test->test_id = $validated['test_id'] ?? null;
+		$user_test->user_id = $validated['user_id'] ?? null;
+		$user_test->status = $validated['status'] ?? null;
+		$user_test->current_step = $validated['current_step'] ?? null;
+		$user_test->score = $validated['score'] ?? null;
+
+        $user_test->save();
 
         $data = [
             'success'       => true,
-            'usertest'   => $usertest
+            'user_test'   => $user_test
         ];
-        
+
         return response()->json($data);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\UserTest  $usertest
+     * @param  \App\Models\UserTest  $user_test
      * @return \Illuminate\Http\Response
      */
-    public function destroy(UserTest $usertest)
-    {   
-        $usertest->delete();
+    public function destroy(UserTest $user_test)
+    {
+        $user_test->delete();
 
         $data = [
             'success' => true,
-            'usertest' => $usertest
+            'user_test' => $user_test
         ];
 
         return response()->json($data);

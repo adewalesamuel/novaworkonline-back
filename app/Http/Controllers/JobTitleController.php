@@ -19,7 +19,7 @@ class JobTitleController extends Controller
     {
         $data = [
             'success' => true,
-            'jobtitles' => JobTitle::where('id', '>', -1)
+            'job_titles' => JobTitle::where('id', '>', -1)
             ->orderBy('created_at', 'desc')->get()
         ];
 
@@ -49,17 +49,17 @@ class JobTitleController extends Controller
         $jobtitle = new JobTitle;
 
         $jobtitle->name = $validated['name'] ?? null;
-		$jobtitle->slug = $validated['slug'] ?? null;
+		$jobtitle->slug = Str::slug($validated['name']);
 		$jobtitle->description = $validated['description'] ?? null;
 		$jobtitle->icon_url = $validated['icon_url'] ?? null;
-		
+
         $jobtitle->save();
 
         $data = [
             'success'       => true,
             'jobtitle'   => $jobtitle
         ];
-        
+
         return response()->json($data);
     }
 
@@ -102,17 +102,17 @@ class JobTitleController extends Controller
         $validated = $request->validated();
 
         $jobtitle->name = $validated['name'] ?? null;
-		$jobtitle->slug = $validated['slug'] ?? null;
+		$jobtitle->slug = Str::slug($validated['name']);
 		$jobtitle->description = $validated['description'] ?? null;
 		$jobtitle->icon_url = $validated['icon_url'] ?? null;
-		
+
         $jobtitle->save();
 
         $data = [
             'success'       => true,
             'jobtitle'   => $jobtitle
         ];
-        
+
         return response()->json($data);
     }
 
@@ -123,7 +123,7 @@ class JobTitleController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(JobTitle $jobtitle)
-    {   
+    {
         $jobtitle->delete();
 
         $data = [

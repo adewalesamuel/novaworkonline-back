@@ -49,16 +49,16 @@ class RoleController extends Controller
         $role = new Role;
 
         $role->name = $validated['name'] ?? null;
-		$role->slug = $validated['slug'] ?? null;
+		$role->slug = Str::slug($validated['name']);
 		$role->permissions = $validated['permissions'] ?? null;
-		
+
         $role->save();
 
         $data = [
             'success'       => true,
             'role'   => $role
         ];
-        
+
         return response()->json($data);
     }
 
@@ -101,16 +101,16 @@ class RoleController extends Controller
         $validated = $request->validated();
 
         $role->name = $validated['name'] ?? null;
-		$role->slug = $validated['slug'] ?? null;
+		$role->slug = Str::slug($validated['name']);
 		$role->permissions = $validated['permissions'] ?? null;
-		
+
         $role->save();
 
         $data = [
             'success'       => true,
             'role'   => $role
         ];
-        
+
         return response()->json($data);
     }
 
@@ -121,7 +121,7 @@ class RoleController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(Role $role)
-    {   
+    {
         $role->delete();
 
         $data = [

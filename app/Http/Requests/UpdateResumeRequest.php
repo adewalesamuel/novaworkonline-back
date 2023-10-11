@@ -24,10 +24,10 @@ class UpdateResumeRequest extends FormRequest
     public function rules()
     {
         return [
-            'content' => 'required|string',
-			'params' => 'required|string',
-			'user_id' => 'required|integer',
-			
+            'content' => 'required|json',
+			'params' => 'nullable|json',
+			'user_id' => 'nullable|integer',
+
         ];
     }
 }

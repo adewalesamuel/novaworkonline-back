@@ -9,10 +9,13 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Auth\Passwords\CanResetPassword;
+use App\Notifications\ResetPasswordNotification;
+
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
+    use HasApiTokens, HasFactory, Notifiable, SoftDeletes, CanResetPassword;
 
     /**
      * The attributes that should be hidden for serialization.
@@ -22,6 +25,7 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'api_token'
     ];
 
     /**
@@ -38,10 +42,26 @@ class User extends Authenticatable
     }
 	public function country()
 	{
-		return $this->belongsTo(Country::class); 
+		return $this->belongsTo(Country::class);
 	}
-	public function jobtitle()
+	public function job_title()
 	{
-		return $this->belongsTo(Jobtitle::class); 
+		return $this->belongsTo(Jobtitle::class);
 	}
+	public function resume()
+	{
+		return $this->hasOne(Resume::class);
+	}
+    /**
+     * Send a password reset notification to the user.
+     *
+     * @param  string  $token
+    */
+    public function sendPasswordResetNotification($token): void
+    {
+        $url = env('APP_FRONT_USER_URL')."/nouveau-motdepasse?token=".$token;
+
+        $this->notify(new ResetPasswordNotification($url));
+    }
+
 }

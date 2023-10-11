@@ -13,8 +13,8 @@ class ApiAdminAuthController extends Controller
 {
     public function login(Request $request) {
         $credentials = $request->only("email", "password");
-    
-        if (!Auth::guard('admins')->once($credentials)) {
+
+        if (!Auth::guard('admin')->once($credentials)) {
             $data = [
                 'error' => true,
                 'message' => "Mail ou mot de passe incorrect"
@@ -42,7 +42,7 @@ class ApiAdminAuthController extends Controller
         if (!$admin) {
             $data = [
                 "error" => true,
-                "message" => "Une erreure est survenue"
+                "message" => "Une erreur est survenue"
             ];
 
             return response()->json($data, 500);
@@ -58,5 +58,5 @@ class ApiAdminAuthController extends Controller
 
         return response()->json($data, 200);
     }
-    
+
 }

@@ -4,18 +4,22 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Artisan;
+use App\Models\Recruiter;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
-use App\Http\Requests\StoreArtisanRequest;
+use App\Http\Requests\StoreRecruiterRequest;
+use App\Http\Requests\ForgotPasswordRequest;
+use App\Http\Requests\ResetPasswordRequest;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Auth\Events\PasswordReset;
 
-class ApiArtisanAuthController extends Controller
+class ApiRecruiterAuthController extends Controller
 {
     public function login(Request $request) {
         $credentials = $request->only("email", "password");
-    
-        if (!Auth::guard('artisans')->once($credentials)) {
+
+        if (!Auth::guard('recruiter')->once($credentials)) {
             $data = [
                 'error' => true,
                 'message' => "Mail ou mot de passe incorrect"
@@ -24,61 +28,91 @@ class ApiArtisanAuthController extends Controller
             return response()->json($data, 404);
         }
 
-        $artisan = Artisan::where('email', $credentials['email'])->first();
+        $recruiter = Recruiter::where('email', $credentials['email'])->first();
 
         $data = [
             "success" => true,
-            "artisan" => $artisan,
-            'tk' => $artisan->api_token,
+            "recruiter" => $recruiter,
+            'tk' => $recruiter->api_token,
         ];
 
         return response()->json($data);
     }
 
-    public function register(StoreArtisanRequest $request)
+    public function register(StoreRecruiterRequest $request)
     {
         $validated = $request->validated();
 
-        $artisan = new Artisan;
+        $recruiter = new Recruiter;
+        $token =  Str::random(60);
 
-        $artisan->name = $validated['name'] ?? null;
-		$artisan->email = $validated['email'] ?? null;
-		$artisan->password = $validated['password'] ?? null;
-		$artisan->phone = $validated['phone'] ?? null;
-		$artisan->country = $validated['country'] ?? null;
-		$artisan->city = $validated['city'] ?? null;
-		$artisan->postal_code = $validated['postal_code'] ?? null;
-		$artisan->address = $validated['address'] ?? null;
-		$artisan->is_active = $validated['is_active'] ?? null;
-		$artisan->img_url = $validated['img_url'] ?? null;
-        $artisan->api_token = Str::random(60);
-		
-        $artisan->save();
+        $recruiter->firstname = $validated['firstname'] ?? null;
+		$recruiter->lastname = $validated['lastname'] ?? null;
+		$recruiter->email = $validated['email'] ?? null;
+		$recruiter->password = $validated['password'] ?? null;
+		$recruiter->company_name = $validated['company_name'] ?? null;
+		$recruiter->location = $validated['location'] ?? null;
+		$recruiter->is_active = true;
+        $recruiter->api_token = $token;
+
+        $recruiter->save();
 
         $data = [
             'success'       => true,
-            'artisan'   => $artisan,
+            'recruiter'   => $recruiter,
+            'tk' => $token
         ];
-        
+
         return response()->json($data);
+    }
+
+    public function forgot_password(ForgotPasswordRequest $request) {
+        $validated = $request->validated();
+        $status = Password::broker('recruiters')->sendResetLink($validated);
+
+        $data = [
+            'status' => __($status)
+        ];
+
+        return response()->json($data, 200);
+    }
+
+    public function reset_password(ResetPasswordRequest $request) {
+        $validated = $request->validated();
+
+        $status = Password::broker('recruiters')->reset(
+            $validated,
+            function (Recruiter $recruiter, string $password) {
+                $recruiter->password = $password;
+                $recruiter->save();
+
+                event(new PasswordReset($recruiter));
+            }
+        );
+
+        $data = [
+            'status' => __($status)
+        ];
+
+        return response()->json($data, 200);
     }
 
     public function logout(Request $request) {
         $token = explode(" ", $request->header('Authorization'))[1];
-        $artisan = Artisan::where('api_token', $token)->first();
+        $recruiter = Recruiter::where('api_token', $token)->first();
 
-        if (!$artisan) {
+        if (!$recruiter) {
             $data = [
                 "error" => true,
-                "message" => "Une erreure est survenue"
+                "message" => "Une erreur est survenue"
             ];
 
             return response()->json($data, 500);
         }
 
-        $artisan->api_token = Str::random(60);
+        $recruiter->api_token = Str::random(60);
 
-        $artisan->save();
+        $recruiter->save();
 
         $data = [
             "success" => true,
@@ -86,5 +120,5 @@ class ApiArtisanAuthController extends Controller
 
         return response()->json($data, 200);
     }
-    
+
 }

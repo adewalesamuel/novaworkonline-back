@@ -13,7 +13,7 @@ class CreateSubscriptionPacksTable extends Migration
      */
     public function up()
     {
-        Schema::create('subscriptionpacks', function (Blueprint $table) {
+        Schema::create('subscription_packs', function (Blueprint $table) {
             $table->id();
 			$table->string('name');
 			$table->string('slug')->unique();
@@ -33,6 +33,6 @@ class CreateSubscriptionPacksTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('subscriptionpacks');
+        Schema::dropIfExists('subscription_packs');
     }
 }

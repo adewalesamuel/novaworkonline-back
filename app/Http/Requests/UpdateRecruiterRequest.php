@@ -24,21 +24,19 @@ class UpdateRecruiterRequest extends FormRequest
     public function rules()
     {
         return [
-            'firstname' => 'required|string',
-			'lastname' => 'required|string',
-			'email' => 'required|string',
-			'password' => 'required|string',
-			'birth_date' => 'required|date',
-			'gender' => 'required|string',
-			'phone_number' => 'required|string',
-			'location' => 'required|string',
-			'profil_img_url' => 'required|string',
-			'company_name' => 'required|string',
-			'company_info' => 'required|string',
-			'api_token' => 'required|string',
-			'is_active' => 'required|boolean',
-			'country_id' => 'required|integer',
-			
+            'firstname' => 'nullable|string',
+			'lastname' => 'nullable|string',
+			'email' => 'nullable|string',
+			'password' => 'nullable|string',
+			'birth_date' => 'nullable|date',
+			'gender' => 'nullable|string',
+			'phone_number' => 'nullable|string',
+			'location' => 'nullable|string',
+			'profil_img_url' => 'nullable|string',
+			'company_name' => 'nullable|string',
+			'company_info' => 'nullable|string',
+			'country_id' => 'nullable|integer',
+
         ];
     }
 }

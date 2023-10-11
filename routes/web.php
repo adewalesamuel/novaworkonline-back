@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\App;
+use App\Http\Controllers\UserController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +16,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/nouveau-motdepasse', function() {
+    return "Erreur";
+})->name('password.reset');
+
+Route::get('/mon-cv/apercu/{token}', [UserController::class, 'resume_preview']);
+Route::get('/candidats/{user}/cv', [UserController::class, 'resume']);

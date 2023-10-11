@@ -24,7 +24,7 @@ class StoreSubscriptionPackRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'nullable|string',
+            'name' => 'required|string',
 			'description' => 'nullable|string',
 			'price' => 'required|integer',
 			'duration' => 'required|integer',

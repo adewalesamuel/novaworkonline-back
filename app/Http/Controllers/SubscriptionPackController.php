@@ -19,7 +19,41 @@ class SubscriptionPackController extends Controller
     {
         $data = [
             'success' => true,
-            'subscriptionpacks' => SubscriptionPack::where('id', '>', -1)
+            'subscription_packs' => SubscriptionPack::where('id', '>', -1)
+            ->orderBy('created_at', 'desc')->get()
+        ];
+
+        return response()->json($data);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function user_index()
+    {
+        $data = [
+            'success' => true,
+            'subscription_packs' => SubscriptionPack::where('id', '>', -1)
+            ->where('type', 'user')
+            ->orderBy('created_at', 'desc')->get()
+        ];
+
+        return response()->json($data);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function recruiter_index()
+    {
+        $data = [
+            'success' => true,
+            'subscription_packs' => SubscriptionPack::where('id', '>', -1)
+            ->where('type', 'recruiter')
             ->orderBy('created_at', 'desc')->get()
         ];
 
@@ -49,19 +83,19 @@ class SubscriptionPackController extends Controller
         $subscriptionpack = new SubscriptionPack;
 
         $subscriptionpack->name = $validated['name'] ?? null;
-		$subscriptionpack->slug = $validated['slug'] ?? null;
+		$subscriptionpack->slug = Str::slug($validated['name']);
 		$subscriptionpack->description = $validated['description'] ?? null;
 		$subscriptionpack->price = $validated['price'] ?? null;
 		$subscriptionpack->duration = $validated['duration'] ?? null;
 		$subscriptionpack->type = $validated['type'] ?? null;
-		
+
         $subscriptionpack->save();
 
         $data = [
             'success'       => true,
             'subscriptionpack'   => $subscriptionpack
         ];
-        
+
         return response()->json($data);
     }
 
@@ -104,19 +138,19 @@ class SubscriptionPackController extends Controller
         $validated = $request->validated();
 
         $subscriptionpack->name = $validated['name'] ?? null;
-		$subscriptionpack->slug = $validated['slug'] ?? null;
+		$subscriptionpack->slug = Str::slug($validated['name']);
 		$subscriptionpack->description = $validated['description'] ?? null;
 		$subscriptionpack->price = $validated['price'] ?? null;
 		$subscriptionpack->duration = $validated['duration'] ?? null;
 		$subscriptionpack->type = $validated['type'] ?? null;
-		
+
         $subscriptionpack->save();
 
         $data = [
             'success'       => true,
             'subscriptionpack'   => $subscriptionpack
         ];
-        
+
         return response()->json($data);
     }
 
@@ -127,7 +161,7 @@ class SubscriptionPackController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(SubscriptionPack $subscriptionpack)
-    {   
+    {
         $subscriptionpack->delete();
 
         $data = [

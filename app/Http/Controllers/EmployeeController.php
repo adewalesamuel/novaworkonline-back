@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\StoreEmployeeRequest;
 use App\Http\Requests\UpdateEmployeeRequest;
 use Illuminate\Support\Str;
+use App\Http\Auth;
 
 
 class EmployeeController extends Controller
@@ -21,6 +22,20 @@ class EmployeeController extends Controller
             'success' => true,
             'employees' => Employee::where('id', '>', -1)
             ->orderBy('created_at', 'desc')->get()
+        ];
+
+        return response()->json($data);
+    }
+
+    public function recruiter_index(Request $request)
+    {
+        $recruiter = Auth::getUser($request, Auth::RECRUITER);
+
+        $data = [
+            'success' => true,
+            'employees' => Employee::with(['user']
+            )->where('id', '>', -1)->where('recruiter_id', $recruiter->id)
+            ->orderBy('created_at', 'desc')->paginate()
         ];
 
         return response()->json($data);

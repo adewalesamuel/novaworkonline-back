@@ -2,8 +2,9 @@
 
 namespace App\Http\Middleware;
 
-use App\Models\Utilisateur;
-use App\Models\Administrateur;
+use App\Models\User;
+use App\Models\Recruiter;
+use App\Models\Admin;
 use Closure;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
@@ -18,19 +19,23 @@ class ApiAuthenticate
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
     public function handle(Request $request, Closure $next,  ...$guards)
-    {   
+    {
         $data = [];
         $user = null;
         $token = $request->header('Authorization') ? explode(" ", $request->header('Authorization'))[1] : null;
 
         switch (Arr::first($guards)) {
             case 'admin':
-                $user = Administrateur::where("api_token", $token);
+                $user = Admin::where("api_token", $token);
                 break;
             case 'user':
-                $user = Utilisateur::where("api_token", $token);
+                $user = User::where("api_token", $token);
+                break;
+            case 'recruiter':
+                $user = Recruiter::where("api_token", $token);
+                break;
             default:
-                $user = Utilisateur::where("api_token", $token);
+                $user = User::where("api_token", $token);
                 break;
         }
 

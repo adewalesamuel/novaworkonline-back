@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreSubscriptionRequest extends FormRequest
+class StoreFileUploadRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,13 +24,7 @@ class StoreSubscriptionRequest extends FormRequest
     public function rules()
     {
         return [
-            'type' => 'nullable|string',
-			'amount' => 'nullable|integer',
-			'payment_mode' => 'required|string',
-			'payment_status' => 'nullable|boolean',
-			'expiration_date' => 'nullable|date',
-			'subscriber_id' => 'nullable|integer',
-			'subscription_pack_id' => 'required|integer|exists:subscription_packs,id',
+            'img' => 'required|file|max:20512|mimes:jpg,bmp,png,gif,jpeg'
         ];
     }
 }

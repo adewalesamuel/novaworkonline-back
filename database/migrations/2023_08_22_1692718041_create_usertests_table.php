@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUserTestsTable extends Migration
+class Createuser_testsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateUserTestsTable extends Migration
      */
     public function up()
     {
-        Schema::create('usertests', function (Blueprint $table) {
+        Schema::create('user_tests', function (Blueprint $table) {
             $table->id();
             $table->foreignId('test_id')
 			->constrained()
@@ -36,6 +36,6 @@ class CreateUserTestsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('usertests');
+        Schema::dropIfExists('user_tests');
     }
 }

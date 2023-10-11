@@ -49,17 +49,17 @@ class TestController extends Controller
         $test = new Test;
 
         $test->name = $validated['name'] ?? null;
-		$test->slug = $validated['slug'] ?? null;
+		$test->slug = Str::slug($validated['name']);
 		$test->description = $validated['description'] ?? null;
 		$test->cotent = $validated['cotent'] ?? null;
-		
+
         $test->save();
 
         $data = [
             'success'       => true,
             'test'   => $test
         ];
-        
+
         return response()->json($data);
     }
 
@@ -77,6 +77,16 @@ class TestController extends Controller
         ];
 
         return response()->json($data);
+    }
+
+    public function latest(Request $requets) {
+        $data = [
+            'success' => true,
+            'test' => Test::where('id', '>', -1)
+            ->orderBy('created_at', 'desc')->firstOrFail()
+        ];
+
+        return response()->json($data, 200);
     }
 
     /**
@@ -102,17 +112,17 @@ class TestController extends Controller
         $validated = $request->validated();
 
         $test->name = $validated['name'] ?? null;
-		$test->slug = $validated['slug'] ?? null;
+		$test->slug = Str::slug($validated['name']);
 		$test->description = $validated['description'] ?? null;
 		$test->cotent = $validated['cotent'] ?? null;
-		
+
         $test->save();
 
         $data = [
             'success'       => true,
             'test'   => $test
         ];
-        
+
         return response()->json($data);
     }
 
@@ -123,7 +133,7 @@ class TestController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(Test $test)
-    {   
+    {
         $test->delete();
 
         $data = [

@@ -25,7 +25,7 @@ class StoreResumeRequest extends FormRequest
     {
         return [
             'content' => 'required|json',
-			'params' => 'required|json',
+			'params' => 'nullable|json',
 			'user_id' => 'nullable|integer|exists:users',
 
         ];

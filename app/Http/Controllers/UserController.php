@@ -2,14 +2,29 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\UserTest;
+use App\Models\Resume;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use Illuminate\Support\Str;
+use App\Http\Auth;
 
 
 class UserController extends Controller
 {
+
+    public function analytics(Request $request) {
+        $user = Auth::getUser($request, Auth::USER);
+        $test = UserTest::where('user_id', $user->id)->first();
+
+        $data = [
+            'success' => true,
+            'test_score' => $test->score ?? 0
+        ];
+
+        return response()->json($data, 200);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -24,6 +39,45 @@ class UserController extends Controller
         ];
 
         return response()->json($data);
+    }
+
+    public function qualified_index(Request $request) {
+        $job_title_id = $request->input('job_title_id');
+        $users =  User::where('id', '>', -1)->with(['job_title'])
+        ->where('is_active', true)->where('is_qualified', true);
+
+        if ($job_title_id != null)
+            $users = $users->where('job_title_id', $job_title_id);
+
+        $users = $users->orderBy('created_at', 'desc')->paginate();
+        $data = [
+            'success' => true,
+            'users' => $users
+        ];
+
+        return response()->json($data);
+    }
+
+    public function resume_preview(Request $request, $token) {
+        $user = User::where('api_token', $token)->first();
+
+        if (!$user) return response("Une erreur est survenue", 200);
+
+        $resume = collect(Resume::where('user_id', $user->id)
+        ->orderBy('created_at', 'desc')->first());
+        $resume['content'] = json_decode($resume['content']);
+
+        return view('resume', ['resume' => $resume]);
+    }
+
+    public function resume(User $user) {
+        if (!$user) return response("Une erreur est survenue", 200);
+
+        $resume = collect(Resume::where('user_id', $user->id)
+        ->orderBy('created_at', 'desc')->first());
+        $resume['content'] = json_decode($resume['content']);
+
+        return view('resume', ['resume' => $resume, 'is_recruiter' => true]);
     }
 
     /**
@@ -61,15 +115,15 @@ class UserController extends Controller
 		$user->is_active = $validated['is_active'] ?? null;
 		$user->is_qualified = $validated['is_qualified'] ?? null;
 		$user->country_id = $validated['country_id'] ?? null;
-		$user->jobtitle_id = $validated['jobtitle_id'] ?? null;
-		
+		$user->job_title_id = $validated['job_title_id'] ?? null;
+
         $user->save();
 
         $data = [
             'success'       => true,
             'user'   => $user
         ];
-        
+
         return response()->json($data);
     }
 
@@ -81,6 +135,28 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
+        $user['resume'] = $user->resume;
+        $user['country'] = $user->country;
+        $user['job_title'] = $user->job_title;
+
+        $data = [
+            'success' => true,
+            'user' => $user
+        ];
+
+        return response()->json($data);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Http\Response
+     */
+    public function profile(Request $request)
+    {
+        $user = Auth::getUser($request, Auth::USER);
+
         $data = [
             'success' => true,
             'user' => $user
@@ -114,27 +190,51 @@ class UserController extends Controller
         $user->firstname = $validated['firstname'] ?? null;
 		$user->lastname = $validated['lastname'] ?? null;
 		$user->email = $validated['email'] ?? null;
-		$user->password = $validated['password'] ?? null;
 		$user->birth_date = $validated['birth_date'] ?? null;
 		$user->gender = $validated['gender'] ?? null;
 		$user->phone_number = $validated['phone_number'] ?? null;
 		$user->city = $validated['city'] ?? null;
 		$user->profil_img_url = $validated['profil_img_url'] ?? null;
-		$user->api_token = $validated['api_token'] ?? null;
-		$user->is_active = $validated['is_active'] ?? null;
-		$user->is_qualified = $validated['is_qualified'] ?? null;
 		$user->country_id = $validated['country_id'] ?? null;
-		$user->jobtitle_id = $validated['jobtitle_id'] ?? null;
-		
+		$user->job_title_id = $validated['job_title_id'] ?? null;
+
         $user->save();
 
         $data = [
             'success'       => true,
             'user'   => $user
         ];
-        
+
         return response()->json($data);
     }
+
+    public function update_profile(UpdateUserRequest $request)
+    {
+        $validated = $request->validated();
+        $user = Auth::getUser($request, Auth::USER);
+
+        $user->firstname = $validated['firstname'] ?? null;
+		$user->lastname = $validated['lastname'] ?? null;
+		$user->email = $validated['email'] ?? null;
+		$user->birth_date = $validated['birth_date'] ?? null;
+		$user->gender = $validated['gender'] ?? null;
+		$user->phone_number = $validated['phone_number'] ?? null;
+		$user->city = $validated['city'] ?? null;
+		$user->profil_img_url = $validated['profil_img_url'] ?? null;
+		$user->country_id = $validated['country_id'] ?? null;
+		$user->job_title_id = $validated['job_title_id'] ?? null;
+
+        $user->save();
+
+        $data = [
+            'success'       => true,
+            'user'   => $user
+        ];
+
+        return response()->json($data);
+    }
+
+
 
     /**
      * Remove the specified resource from storage.
@@ -143,7 +243,7 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(User $user)
-    {   
+    {
         $user->delete();
 
         $data = [

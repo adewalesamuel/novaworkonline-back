@@ -22,6 +22,7 @@ class CreateEmployeesTable extends Migration
 			->constrained()
 			->onDelete('cascade');
 			$table->foreignId('project_id')
+            ->nullable()
 			->constrained()
 			->onDelete('cascade');
 			$table->softDeletes();

@@ -9,9 +9,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Resume extends Model
 {
     use HasFactory, SoftDeletes;
-            
+
 	public function user()
 	{
-		return $this->belongsTo(User::class); 
+		return $this->belongsTo(User::class);
 	}
 }

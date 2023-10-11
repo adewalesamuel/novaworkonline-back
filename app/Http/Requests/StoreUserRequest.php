@@ -34,7 +34,7 @@ class StoreUserRequest extends FormRequest
 			'city' => 'nullable|string',
 			'profil_img_url' => 'nullable|string',
 			'country_id' => 'nullable|integer',
-			'jobtitle_id' => 'nullable|integer',
+			'job_title_id' => 'nullable|integer',
 
         ];
     }

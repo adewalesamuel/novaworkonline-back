@@ -16,7 +16,7 @@ class CreateResumesTable extends Migration
         Schema::create('resumes', function (Blueprint $table) {
             $table->id();
 			$table->json('content')->nullable();
-			$table->json('params');
+			$table->json('params')->nullable();
 			$table->foreignId('user_id')
 			->constrained()
 			->onDelete('cascade');

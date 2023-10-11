@@ -25,10 +25,10 @@ class UpdateProjectRequest extends FormRequest
     {
         return [
             'name' => 'required|string',
-			'slug' => 'required|string',
+			'slug' => 'nullable|string',
 			'description' => 'required|string',
-			'recruiter_id' => 'required|integer',
-			
+			'recruiter_id' => 'nullable|integer|exists:recruiters,id',
+
         ];
     }
 }

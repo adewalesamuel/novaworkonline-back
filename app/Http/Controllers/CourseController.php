@@ -49,20 +49,20 @@ class CourseController extends Controller
         $course = new Course;
 
         $course->name = $validated['name'] ?? null;
-		$course->slug = $validated['slug'] ?? null;
+		$course->slug = Str::slug($validated['name']);
 		$course->description = $validated['description'] ?? null;
 		$course->estimated_length = $validated['estimated_length'] ?? null;
 		$course->lesson_length = $validated['lesson_length'] ?? null;
 		$course->cover_img_url = $validated['cover_img_url'] ?? null;
 		$course->author = $validated['author'] ?? null;
-		
+
         $course->save();
 
         $data = [
             'success'       => true,
             'course'   => $course
         ];
-        
+
         return response()->json($data);
     }
 
@@ -105,20 +105,20 @@ class CourseController extends Controller
         $validated = $request->validated();
 
         $course->name = $validated['name'] ?? null;
-		$course->slug = $validated['slug'] ?? null;
+		$course->slug = Str::slug($validated['name']);
 		$course->description = $validated['description'] ?? null;
 		$course->estimated_length = $validated['estimated_length'] ?? null;
 		$course->lesson_length = $validated['lesson_length'] ?? null;
 		$course->cover_img_url = $validated['cover_img_url'] ?? null;
 		$course->author = $validated['author'] ?? null;
-		
+
         $course->save();
 
         $data = [
             'success'       => true,
             'course'   => $course
         ];
-        
+
         return response()->json($data);
     }
 
@@ -129,7 +129,7 @@ class CourseController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(Course $course)
-    {   
+    {
         $course->delete();
 
         $data = [

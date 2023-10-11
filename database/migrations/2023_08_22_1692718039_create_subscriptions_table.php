@@ -21,7 +21,7 @@ class CreateSubscriptionsTable extends Migration
 			$table->enum('payment_status', ['pending', 'valdated', 'failed'])->default('pending');
 			$table->date('expiration_date'); //current month + pack duration
 			$table->bigInteger('subscriber_id');
-            $table->foreignId('subscriptionpack_id')
+            $table->foreignId('subscription_pack_id')
 			->constrained()
 			->onDelete('cascade');
 			$table->softDeletes();

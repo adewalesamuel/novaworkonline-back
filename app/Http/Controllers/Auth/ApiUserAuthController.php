@@ -4,18 +4,22 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Client;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
-use App\Http\Requests\StoreClientRequest;
+use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\ForgotPasswordRequest;
+use App\Http\Requests\ResetPasswordRequest;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Auth\Events\PasswordReset;
 
-class ApiClientAuthController extends Controller
+class ApiUserAuthController extends Controller
 {
     public function login(Request $request) {
         $credentials = $request->only("email", "password");
-    
-        if (!Auth::guard('clients')->once($credentials)) {
+
+        if (!Auth::guard()->once($credentials)) {
             $data = [
                 'error' => true,
                 'message' => "Mail ou mot de passe incorrect"
@@ -24,59 +28,87 @@ class ApiClientAuthController extends Controller
             return response()->json($data, 404);
         }
 
-        $client = Client::where('email', $credentials['email'])->first();
+        $user = User::where('email', $credentials['email'])->first();
 
         $data = [
             "success" => true,
-            "client" => $client,
-            "tk" => $client->api_token
+            "user" => $user,
+            "tk" => $user->api_token
         ];
 
         return response()->json($data);
     }
 
-    public function register(StoreClientRequest $request) {
+    public function register(StoreUserRequest $request) {
         $validated = $request->validated();
 
-        $client = new Client;
+        $user = new User;
+        $token =  Str::random(60);
 
-        $client->name = $validated['name'] ?? null;
-		$client->email = $validated['email'] ?? null;
-		$client->password = $validated['password'] ?? null;
-		$client->phone = $validated['phone'] ?? null;
-		$client->country = $validated['country'] ?? null;
-		$client->city = $validated['city'] ?? null;
-		$client->address = $validated['address'] ?? null;
-		$client->is_active = $validated['is_active'] ?? null;
-		$client->img_url = $validated['img_url'] ?? null;
-        $client->api_token = Str::random(60);
-		
-        $client->save();
+        $user->firstname = $validated['firstname'] ?? null;
+		$user->lastname = $validated['lastname'] ?? null;
+		$user->email = $validated['email'] ?? null;
+		$user->password = $validated['password'] ?? null;
+        $user->api_token = $token;
+
+        $user->save();
 
         $data = [
             'success'  => true,
-            'client'   => $client
+            'user'   => $user,
+            'tk' => $token
         ];
-        
+
         return response()->json($data);
+    }
+
+    public function forgot_password(ForgotPasswordRequest $request) {
+        $validated = $request->validated();
+        $status = Password::sendResetLink($validated);
+
+        $data = [
+            'status' => __($status)
+        ];
+
+        return response()->json($data, 200);
+    }
+
+    public function reset_password(ResetPasswordRequest $request) {
+        $validated = $request->validated();
+
+        $status = Password::reset(
+            $validated,
+            function (User $user, string $password) {
+                $user->password = $password;
+                $user->save();
+
+                event(new PasswordReset($user));
+            }
+        );
+
+        $data = [
+            'status' => __($status)
+        ];
+
+        return response()->json($data, 200);
     }
 
     public function logout(Request $request) {
         $token = explode(" ", $request->header('Authorization'))[1];
-        $client = Client::where('api_token', $token)->first();
+        $user = User::where('api_token', $token)->first();
 
-        if (!$client) {
+        if (!$user) {
             $data = [
                 "error" => true,
-                "message" => "Une erreure est survenue"
+                "message" => "Une erreur est survenue"
             ];
 
             return response()->json($data, 500);
         }
 
-        $client->api_token = Str::random(60);
+        $user->api_token = Str::random(60);
 
-        $client->save();
+        $user->save();
 
         $data = [
             "success" => true,
@@ -84,5 +116,5 @@ class ApiClientAuthController extends Controller
 
         return response()->json($data, 200);
     }
-    
+
 }
