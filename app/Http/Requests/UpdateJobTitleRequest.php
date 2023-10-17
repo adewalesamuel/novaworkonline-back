@@ -24,11 +24,10 @@ class UpdateJobTitleRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string',
-			'slug' => 'required|string',
-			'description' => 'required|string',
-			'icon_url' => 'required|string',
-			
+            'name' => 'nullable|string',
+			'description' => 'nullable|string',
+			'icon_url' => 'nullable|string',
+
         ];
     }
 }

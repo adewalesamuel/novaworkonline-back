@@ -27,6 +27,7 @@ class UpdateRecruiterRequest extends FormRequest
             'firstname' => 'nullable|string',
 			'lastname' => 'nullable|string',
 			'email' => 'nullable|string',
+            'password' => 'nullable|string',
 			'password' => 'nullable|string',
 			'birth_date' => 'nullable|date',
 			'gender' => 'nullable|string',

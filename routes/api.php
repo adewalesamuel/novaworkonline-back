@@ -36,15 +36,15 @@ use App\Http\Controllers\Auth\ApiRecruiterAuthController;
 |
 */
 
-Route::post('/login', [ApiUserAuthController::class, 'login']);
-Route::post('/register', [ApiUserAuthController::class, 'register']);
-Route::post('/forgot-password', [ApiUserAuthController::class, 'forgot_password']);
-Route::post('/reset-password', [ApiUserAuthController::class, 'reset_password']);
+Route::post('login', [ApiUserAuthController::class, 'login']);
+Route::post('register', [ApiUserAuthController::class, 'register']);
+Route::post('forgot-password', [ApiUserAuthController::class, 'forgot_password']);
+Route::post('reset-password', [ApiUserAuthController::class, 'reset_password']);
 Route::get('job-titles', [JobTitleController::class, 'index']);
 Route::get('countries', [CountryController::class, 'index']);
 
 Route::middleware(['auth.api_token'])->group(function () {
-    Route::post('/logout', [ApiUserAuthController::class, 'logout']);
+    Route::post('logout', [ApiUserAuthController::class, 'logout']);
 
     Route::get('profile', [UserController::class, 'profile']);
     Route::put('profile', [UserController::class, 'update_profile']);
@@ -72,13 +72,13 @@ Route::middleware(['auth.api_token'])->group(function () {
 });
 
 Route::prefix('recruiter')->group(function () {
-    Route::post('/login', [ApiRecruiterAuthController::class, 'login']);
-    Route::post('/register', [ApiRecruiterAuthController::class, 'register']);
-    Route::post('/forgot-password', [ApiRecruiterAuthController::class, 'forgot_password']);
-    Route::post('/reset-password', [ApiRecruiterAuthController::class, 'reset_password']);
+    Route::post('login', [ApiRecruiterAuthController::class, 'login']);
+    Route::post('register', [ApiRecruiterAuthController::class, 'register']);
+    Route::post('forgot-password', [ApiRecruiterAuthController::class, 'forgot_password']);
+    Route::post('reset-password', [ApiRecruiterAuthController::class, 'reset_password']);
 
     Route::middleware(['auth.api_token:recruiter'])->group(function () {
-        Route::post('/logout', [ApiRecruiterAuthController::class, 'logout']);
+        Route::post('logout', [ApiRecruiterAuthController::class, 'logout']);
 
         Route::get('profile', [RecruiterController::class, 'profile']);
         Route::put('profile', [RecruiterController::class, 'update_profile']);
@@ -89,7 +89,7 @@ Route::prefix('recruiter')->group(function () {
         Route::post('subscriptions', [SubscriptionController::class, 'recruiter_store']);
 
         Route::get('users/qualified', [UserController::class, 'qualified_index']);
-        Route::get('users/{user}', [UserController::class, 'show']);
+        Route::get('users/{user}', [UserController::class, 'recruiter_show']);
         Route::get('users/{user}/resume', [ResumeController::class, 'resume']);
 
         Route::get('interview-requests', [InterviewRequestController::class, 'recruiter_index']);
@@ -111,11 +111,17 @@ Route::prefix('recruiter')->group(function () {
 });
 
 Route::prefix('admin')->group(function () {
-    Route::post('/login', [ApiAdminAuthController::class, 'login']);
+    Route::post('login', [ApiAdminAuthController::class, 'login']);
 
     Route::middleware(['auth.api_token:admin'])->group(function () {
-        Route::post('/logout', [ApiAdminAuthController::class, 'logout']);
+        Route::post('logout', [ApiAdminAuthController::class, 'logout']);
 
+        Route::get('analytics', [AdminController::class, 'analytics']);
+
+        Route::get('profile', [AdminController::class, 'profile']);
+        Route::put('profile', [AdminController::class, 'update_profile']);
+
+        Route::post('upload', [FileUploadController::class, 'store']);
 
         Route::get('countries', [CountryController::class, 'index']);
         Route::post('countries', [CountryController::class, 'store']);
@@ -129,11 +135,11 @@ Route::prefix('admin')->group(function () {
         Route::put('roles/{role}', [RoleController::class, 'update']);
         Route::delete('roles/{role}', [RoleController::class, 'destroy']);
 
-        Route::get('job_titles', [JobTitleController::class, 'index']);
-        Route::post('job_titles', [JobTitleController::class, 'store']);
-        Route::get('job_titles/{job_title}', [JobTitleController::class, 'show']);
-        Route::put('job_titles/{job_title}', [JobTitleController::class, 'update']);
-        Route::delete('job_titles/{job_title}', [JobTitleController::class, 'destroy']);
+        Route::get('job-titles', [JobTitleController::class, 'index']);
+        Route::post('job-titles', [JobTitleController::class, 'store']);
+        Route::get('job-titles/{job_title}', [JobTitleController::class, 'show']);
+        Route::put('job-titles/{job_title}', [JobTitleController::class, 'update']);
+        Route::delete('job-titles/{job_title}', [JobTitleController::class, 'destroy']);
 
         Route::get('admins', [AdminController::class, 'index']);
         Route::post('admins', [AdminController::class, 'store']);
@@ -143,6 +149,7 @@ Route::prefix('admin')->group(function () {
 
         Route::get('users', [UserController::class, 'index']);
         Route::post('users', [UserController::class, 'store']);
+        Route::get('users/qualified', [UserController::class, 'qualified_index']);
         Route::get('users/{user}', [UserController::class, 'show']);
         Route::put('users/{user}', [UserController::class, 'update']);
         Route::delete('users/{user}', [UserController::class, 'destroy']);
@@ -179,9 +186,9 @@ Route::prefix('admin')->group(function () {
 
         Route::get('subscription-packs', [SubscriptionPackController::class, 'index']);
         Route::post('subscription-packs', [SubscriptionPackController::class, 'store']);
-        Route::get('subscription-packs/{subscriptionpack}', [SubscriptionPackController::class, 'show']);
-        Route::put('subscription-packs/{subscriptionpack}', [SubscriptionPackController::class, 'update']);
-        Route::delete('subscription-packs/{subscriptionpack}', [SubscriptionPackController::class, 'destroy']);
+        Route::get('subscription-packs/{subscription_pack}', [SubscriptionPackController::class, 'show']);
+        Route::put('subscription-packs/{subscription_pack}', [SubscriptionPackController::class, 'update']);
+        Route::delete('subscription-packs/{subscription_pack}', [SubscriptionPackController::class, 'destroy']);
 
         Route::get('subscriptions', [SubscriptionController::class, 'index']);
         Route::post('subscriptions', [SubscriptionController::class, 'store']);
@@ -207,11 +214,11 @@ Route::prefix('admin')->group(function () {
         Route::put('projects/{project}', [ProjectController::class, 'update']);
         Route::delete('projects/{project}', [ProjectController::class, 'destroy']);
 
-        Route::get('interview_requests', [InterviewRequestController::class, 'index']);
-        Route::post('interview_requests', [InterviewRequestController::class, 'store']);
-        Route::get('interview_requests/{interview_request}', [InterviewRequestController::class, 'show']);
-        Route::put('interview_requests/{interview_request}', [InterviewRequestController::class, 'update']);
-        Route::delete('interview_requests/{interview_request}', [InterviewRequestController::class, 'destroy']);
+        Route::get('interview-requests', [InterviewRequestController::class, 'index']);
+        Route::post('interview-requests', [InterviewRequestController::class, 'store']);
+        Route::get('interview-requests/{interview_request}', [InterviewRequestController::class, 'show']);
+        Route::put('interview-requests/{interview_request}', [InterviewRequestController::class, 'update']);
+        Route::delete('interview-requests/{interview_request}', [InterviewRequestController::class, 'destroy']);
 
         Route::get('employees', [EmployeeController::class, 'index']);
         Route::post('employees', [EmployeeController::class, 'store']);

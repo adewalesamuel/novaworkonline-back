@@ -24,8 +24,8 @@ class StoreInterviewRequestRequest extends FormRequest
     public function rules()
     {
         return [
-			'recruiter_id' => 'required|integer||exists:users',
-			'user_id' => 'required|integer||exists:users',
+			'recruiter_id' => 'nullable|integer||exists:recruiters,id',
+			'user_id' => 'required|integer||exists:users,id',
 			'description' => 'nullable|string',
 
         ];

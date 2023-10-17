@@ -9,17 +9,17 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Employee extends Model
 {
     use HasFactory, SoftDeletes;
-            
+
 	public function user()
 	{
-		return $this->belongsTo(User::class); 
+		return $this->belongsTo(User::class);
 	}
-	public function recruteur()
+	public function recruiter()
 	{
-		return $this->belongsTo(Recruteur::class); 
+		return $this->belongsTo(Recruiter::class);
 	}
 	public function project()
 	{
-		return $this->belongsTo(Project::class); 
+		return $this->belongsTo(Project::class);
 	}
 }

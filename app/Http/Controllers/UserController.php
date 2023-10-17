@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\UserTest;
 use App\Models\Resume;
+use App\Models\InterviewRequest;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
@@ -35,7 +36,7 @@ class UserController extends Controller
         $data = [
             'success' => true,
             'users' => User::where('id', '>', -1)
-            ->orderBy('created_at', 'desc')->get()
+            ->orderBy('created_at', 'desc')->paginate()
         ];
 
         return response()->json($data);
@@ -67,7 +68,7 @@ class UserController extends Controller
         ->orderBy('created_at', 'desc')->first());
         $resume['content'] = json_decode($resume['content']);
 
-        return view('resume', ['resume' => $resume]);
+        return view('resume', ['resume' => $resume, 'is_recruiter' => false]);
     }
 
     public function resume(User $user) {
@@ -111,9 +112,7 @@ class UserController extends Controller
 		$user->phone_number = $validated['phone_number'] ?? null;
 		$user->city = $validated['city'] ?? null;
 		$user->profil_img_url = $validated['profil_img_url'] ?? null;
-		$user->api_token = $validated['api_token'] ?? null;
-		$user->is_active = $validated['is_active'] ?? null;
-		$user->is_qualified = $validated['is_qualified'] ?? null;
+		$user->api_token = Str::random(60);
 		$user->country_id = $validated['country_id'] ?? null;
 		$user->job_title_id = $validated['job_title_id'] ?? null;
 
@@ -138,6 +137,24 @@ class UserController extends Controller
         $user['resume'] = $user->resume;
         $user['country'] = $user->country;
         $user['job_title'] = $user->job_title;
+
+        $data = [
+            'success' => true,
+            'user' => $user
+        ];
+
+        return response()->json($data);
+    }
+
+    public function recruiter_show(Request $request, User $user)
+    {
+        $recruiter = Auth::getUser($request, Auth::RECRUITER);
+
+        $user['resume'] = $user->resume;
+        $user['country'] = $user->country;
+        $user['job_title'] = $user->job_title;
+        $user['interview_request'] = InterviewRequest::where('user_id', $user->id)
+        ->where('recruiter_id', $recruiter->id)->first();
 
         $data = [
             'success' => true,
@@ -194,9 +211,12 @@ class UserController extends Controller
 		$user->gender = $validated['gender'] ?? null;
 		$user->phone_number = $validated['phone_number'] ?? null;
 		$user->city = $validated['city'] ?? null;
-		$user->profil_img_url = $validated['profil_img_url'] ?? null;
+		$user->profil_img_url = $validated['profil_img_url'] ?? $user->profil_img_url;
 		$user->country_id = $validated['country_id'] ?? null;
 		$user->job_title_id = $validated['job_title_id'] ?? null;
+
+        if ($validated['password'])
+            $user->password = $validated['password'];
 
         $user->save();
 

@@ -23,7 +23,7 @@ class SubscriptionController extends Controller
         $data = [
             'success' => true,
             'subscriptions' => Subscription::where('id', '>', -1)
-            ->orderBy('created_at', 'desc')->get()
+            ->orderBy('created_at', 'desc')->paginate()
         ];
 
         return response()->json($data);

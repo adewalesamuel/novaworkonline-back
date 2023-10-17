@@ -46,18 +46,18 @@ class JobTitleController extends Controller
     {
         $validated = $request->validated();
 
-        $jobtitle = new JobTitle;
+        $job_title = new JobTitle;
 
-        $jobtitle->name = $validated['name'] ?? null;
-		$jobtitle->slug = Str::slug($validated['name']);
-		$jobtitle->description = $validated['description'] ?? null;
-		$jobtitle->icon_url = $validated['icon_url'] ?? null;
+        $job_title->name = $validated['name'] ?? null;
+		$job_title->slug = Str::slug($validated['name']);
+		$job_title->description = $validated['description'] ?? null;
+		$job_title->icon_url = $validated['icon_url'] ?? null;
 
-        $jobtitle->save();
+        $job_title->save();
 
         $data = [
             'success'       => true,
-            'jobtitle'   => $jobtitle
+            'job_title'   => $job_title
         ];
 
         return response()->json($data);
@@ -66,14 +66,14 @@ class JobTitleController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\JobTitle  $jobtitle
+     * @param  \App\Models\JobTitle  $job_title
      * @return \Illuminate\Http\Response
      */
-    public function show(JobTitle $jobtitle)
+    public function show(JobTitle $job_title)
     {
         $data = [
             'success' => true,
-            'jobtitle' => $jobtitle
+            'job_title' => $job_title
         ];
 
         return response()->json($data);
@@ -82,10 +82,10 @@ class JobTitleController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\JobTitle  $jobtitle
+     * @param  \App\Models\JobTitle  $job_title
      * @return \Illuminate\Http\Response
      */
-    public function edit(JobTitle $jobtitle)
+    public function edit(JobTitle $job_title)
     {
         //
     }
@@ -94,23 +94,23 @@ class JobTitleController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\JobTitle  $jobtitle
+     * @param  \App\Models\JobTitle  $job_title
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateJobTitleRequest $request, JobTitle $jobtitle)
+    public function update(UpdateJobTitleRequest $request, JobTitle $job_title)
     {
         $validated = $request->validated();
 
-        $jobtitle->name = $validated['name'] ?? null;
-		$jobtitle->slug = Str::slug($validated['name']);
-		$jobtitle->description = $validated['description'] ?? null;
-		$jobtitle->icon_url = $validated['icon_url'] ?? null;
+        $job_title->name = $validated['name'] ?? null;
+		$job_title->slug = Str::slug($validated['name']);
+		$job_title->description = $validated['description'] ?? null;
+		$job_title->icon_url = $validated['icon_url'] ?? null;
 
-        $jobtitle->save();
+        $job_title->save();
 
         $data = [
             'success'       => true,
-            'jobtitle'   => $jobtitle
+            'job_title'   => $job_title
         ];
 
         return response()->json($data);
@@ -119,16 +119,16 @@ class JobTitleController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\JobTitle  $jobtitle
+     * @param  \App\Models\JobTitle  $job_title
      * @return \Illuminate\Http\Response
      */
-    public function destroy(JobTitle $jobtitle)
+    public function destroy(JobTitle $job_title)
     {
-        $jobtitle->delete();
+        $job_title->delete();
 
         $data = [
             'success' => true,
-            'jobtitle' => $jobtitle
+            'job_title' => $job_title
         ];
 
         return response()->json($data);

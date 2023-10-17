@@ -22,7 +22,7 @@ class UserTestController extends Controller
         $data = [
             'success' => true,
             'user_tests' => UserTest::where('id', '>', -1)
-            ->orderBy('created_at', 'desc')->get()
+            ->orderBy('created_at', 'desc')->paginate()
         ];
 
         return response()->json($data);

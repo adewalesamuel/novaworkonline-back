@@ -20,14 +20,14 @@ class CreateRecruitersTable extends Migration
 			$table->string('email')->unique();
 			$table->string('password');
 			$table->date('birth_date')->nullable();
-			$table->enum('gender', ['M', 'F', 'O'])->nullable();
+			$table->enum('gender', ['M', 'F', 'O'])->default('M');
 			$table->string('phone_number')->nullable()->default('');
 			$table->string('location')->nullable()->default('');
 			$table->string('profil_img_url')->nullable()->default('');
 			$table->string('company_name');
 			$table->string('company_info')->nullable()->default('');
 			$table->string('api_token');
-			$table->boolean('is_active')->dafault(true);
+			$table->boolean('is_active')->default(true);
 			$table->foreignId('country_id')
             ->nullable()
 			->constrained()

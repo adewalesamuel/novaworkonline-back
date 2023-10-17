@@ -52,6 +52,10 @@ class User extends Authenticatable
 	{
 		return $this->hasOne(Resume::class);
 	}
+	public function interview_request()
+	{
+		return $this->hasOne(InterViewRequest::class);
+	}
     /**
      * Send a password reset notification to the user.
      *

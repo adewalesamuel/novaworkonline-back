@@ -20,7 +20,7 @@ class LessonController extends Controller
         $data = [
             'success' => true,
             'lessons' => Lesson::where('id', '>', -1)
-            ->orderBy('created_at', 'desc')->get()
+            ->orderBy('created_at', 'desc')->paginate()
         ];
 
         return response()->json($data);

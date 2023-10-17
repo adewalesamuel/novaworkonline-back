@@ -22,7 +22,8 @@ class RecruiterController extends Controller
         $data = [
             'success' => true,
             'qualified_user_count' => User::where('is_qualified', true)->count(),
-            'interview_request_count' => InterviewRequest::where('status', '!=', 'rejected')->count(),
+            'interview_request_count' => InterviewRequest::where('status', '!=', 'rejected')
+            ->where('recruiter_id', $recruiter->id)->count(),
             'employees_count' => Employee::where('recruiter_id', $recruiter->id)->count(),
             'projects_count' => Project::where('recruiter_id', $recruiter->id)->count()
         ];
@@ -39,7 +40,7 @@ class RecruiterController extends Controller
         $data = [
             'success' => true,
             'recruiters' => Recruiter::where('id', '>', -1)
-            ->orderBy('created_at', 'desc')->get()
+            ->orderBy('created_at', 'desc')->paginate()
         ];
 
         return response()->json($data);
@@ -79,6 +80,7 @@ class RecruiterController extends Controller
 		$recruiter->company_info = $validated['company_info'] ?? null;
 		$recruiter->country_id = $validated['country_id'] ?? null;
         $recruiter->profil_img_url = $validated['profil_img_url'] ?? null;
+        $recruiter->api_token = Str::random(60);
 
         $recruiter->save();
 
@@ -157,9 +159,10 @@ class RecruiterController extends Controller
 		$recruiter->company_name = $validated['company_name'] ?? null;
 		$recruiter->company_info = $validated['company_info'] ?? null;
 		$recruiter->country_id = $validated['country_id'] ?? null;
+		$recruiter->profil_img_url = $validated['profil_img_url'] ?? $recruiter->profil_img_url;
 
-        if ($validated['profil_img_url'])
-		    $recruiter->profil_img_url = $validated['profil_img_url'] ?? null;
+        if ($validated['password'])
+            $recruiter->password = $validated['password'];
 
         $recruiter->save();
 

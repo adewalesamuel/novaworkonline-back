@@ -24,11 +24,11 @@ class UpdateCountryRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string',
-			'code' => 'required|string',
-			'phone_code' => 'required|string',
-			'flag_icon_url' => 'required|string',
-			
+            'name' => 'nullable|string',
+			'code' => 'nullable|string',
+			'phone_code' => 'nullable|string',
+			'flag_icon_url' => 'nullable|string',
+
         ];
     }
 }

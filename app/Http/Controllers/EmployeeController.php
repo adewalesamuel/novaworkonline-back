@@ -20,8 +20,8 @@ class EmployeeController extends Controller
     {
         $data = [
             'success' => true,
-            'employees' => Employee::where('id', '>', -1)
-            ->orderBy('created_at', 'desc')->get()
+            'employees' => Employee::with(['user', 'recruiter'])
+            ->where('id', '>', -1)->orderBy('created_at', 'desc')->paginate()
         ];
 
         return response()->json($data);

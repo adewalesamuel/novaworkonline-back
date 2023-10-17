@@ -21,7 +21,7 @@ class ResumeController extends Controller
         $data = [
             'success' => true,
             'resumes' => Resume::where('id', '>', -1)
-            ->orderBy('created_at', 'desc')->get()
+            ->orderBy('created_at', 'desc')->paginate()
         ];
 
         return response()->json($data);

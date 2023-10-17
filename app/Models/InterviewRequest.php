@@ -9,17 +9,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class InterviewRequest extends Model
 {
     use HasFactory, SoftDeletes;
-            
-	public function recruteur()
+
+	public function recruiter()
 	{
-		return $this->belongsTo(Recruteur::class); 
+		return $this->belongsTo(Recruiter::class);
 	}
 	public function user()
 	{
-		return $this->belongsTo(User::class); 
-	}
-	public function recruiter()
-	{
-		return $this->belongsTo(Recruiter::class); 
+		return $this->belongsTo(User::class);
 	}
 }

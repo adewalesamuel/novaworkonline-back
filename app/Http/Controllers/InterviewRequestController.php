@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\InterviewRequest;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreInterviewRequestRequest;
 use App\Http\Requests\UpdateInterviewRequestRequest;
@@ -20,8 +21,8 @@ class InterviewRequestController extends Controller
     {
         $data = [
             'success' => true,
-            'interview_requests' => InterviewRequest::where('id', '>', -1)
-            ->orderBy('created_at', 'desc')->get()
+            'interview_requests' => InterviewRequest::with(['user', 'recruiter'])
+            ->where('id', '>', -1)->orderBy('created_at', 'desc')->paginate()
         ];
 
         return response()->json($data);
@@ -104,6 +105,10 @@ class InterviewRequestController extends Controller
      */
     public function show(InterviewRequest $interview_request)
     {
+        $interview_request['user'] = User::with(['job_title'])
+        ->find($interview_request->user_id);
+        $interview_request['recruiter'] = $interview_request->recruiter;
+
         $data = [
             'success' => true,
             'interview_request' => $interview_request

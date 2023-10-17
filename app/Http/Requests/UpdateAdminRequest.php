@@ -24,17 +24,15 @@ class UpdateAdminRequest extends FormRequest
     public function rules()
     {
         return [
-            'firstname' => 'required|string',
-			'lastname' => 'required|string',
-			'email' => 'required|string',
-			'password' => 'required|string',
-			'phone_number' => 'required|string',
-			'profil_img_url' => 'required|string',
-			'api_token' => 'required|string',
-			'is_active' => 'required|boolean',
-			'country_id' => 'required|integer',
-			'role_id' => 'required|integer',
-			
+            'firstname' => 'nullable|string',
+			'lastname' => 'nullable|string',
+			'email' => 'nullable|string',
+            'password' => 'nullable|string',
+			'phone_number' => 'nullable|string',
+			'profil_img_url' => 'nullable|string',
+			'country_id' => 'nullable|integer|exists:countries,id',
+			'role_id' => 'nullable|integer|exists:roles,id'
+
         ];
     }
 }

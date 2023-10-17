@@ -20,7 +20,7 @@ class UserCourseController extends Controller
         $data = [
             'success' => true,
             'usercourses' => UserCourse::where('id', '>', -1)
-            ->orderBy('created_at', 'desc')->get()
+            ->orderBy('created_at', 'desc')->paginate()
         ];
 
         return response()->json($data);
@@ -51,14 +51,14 @@ class UserCourseController extends Controller
         $usercourse->progress = $validated['progress'] ?? null;
 		$usercourse->course_id = $validated['course_id'] ?? null;
 		$usercourse->user_id = $validated['user_id'] ?? null;
-		
+
         $usercourse->save();
 
         $data = [
             'success'       => true,
             'usercourse'   => $usercourse
         ];
-        
+
         return response()->json($data);
     }
 
@@ -103,14 +103,14 @@ class UserCourseController extends Controller
         $usercourse->progress = $validated['progress'] ?? null;
 		$usercourse->course_id = $validated['course_id'] ?? null;
 		$usercourse->user_id = $validated['user_id'] ?? null;
-		
+
         $usercourse->save();
 
         $data = [
             'success'       => true,
             'usercourse'   => $usercourse
         ];
-        
+
         return response()->json($data);
     }
 
@@ -121,7 +121,7 @@ class UserCourseController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(UserCourse $usercourse)
-    {   
+    {
         $usercourse->delete();
 
         $data = [

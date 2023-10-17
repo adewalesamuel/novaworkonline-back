@@ -25,6 +25,7 @@ class StoreCountryRequest extends FormRequest
     {
         return [
             'name' => 'required|string',
+            'code' => 'required|string|unique:countries',
 			'phone_code' => 'required|string|unique:countries',
 			'flag_icon_url' => 'nullable|string',
 
