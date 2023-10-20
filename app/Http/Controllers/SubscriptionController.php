@@ -9,6 +9,9 @@ use App\Http\Requests\UpdateSubscriptionRequest;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 use App\Http\Auth;
+use App\Jobs\AdminMailNotificationJob;
+use App\Notifications\RecruiterSubscripitionNotification;
+use App\Notifications\UserSubscripitionNotification;
 
 
 class SubscriptionController extends Controller
@@ -131,6 +134,9 @@ class SubscriptionController extends Controller
 
         $subscription->save();
 
+        AdminMailNotificationJob::dispatchAfterResponse(
+            new UserSubscripitionNotification($user));
+
         $data = [
             'success'       => true,
             'subscription'   => $subscription
@@ -156,6 +162,9 @@ class SubscriptionController extends Controller
 		$subscription->subscription_pack_id = $validated['subscription_pack_id'] ?? null;
 		$subscription->expiration_date = Carbon::now()->addMonth($subscription_pack->duration ?? 1);
 		$subscription->subscriber_id = $recruiter->id;
+
+        AdminMailNotificationJob::dispatchAfterResponse(
+            new RecruiterSubscripitionNotification($recruiter));
 
         $subscription->save();
 

@@ -8,6 +8,8 @@ use App\Http\Requests\StoreInterviewRequestRequest;
 use App\Http\Requests\UpdateInterviewRequestRequest;
 use Illuminate\Support\Str;
 use App\Http\Auth;
+use App\Jobs\AdminMailNotificationJob;
+use App\Notifications\InterviewRequestNotification;
 
 
 class InterviewRequestController extends Controller
@@ -88,6 +90,9 @@ class InterviewRequestController extends Controller
 		$interview_request->user_id = $validated['user_id'] ?? null;
 
         $interview_request->save();
+
+        AdminMailNotificationJob::dispatchAfterResponse(
+            new InterviewRequestNotification($interview_request));
 
         $data = [
             'success'       => true,

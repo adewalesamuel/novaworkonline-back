@@ -20,6 +20,7 @@ use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\InterviewRequestController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\FileUploadController;
+use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\Auth\ApiUserAuthController;
 use App\Http\Controllers\Auth\ApiAdminAuthController;
 use App\Http\Controllers\Auth\ApiRecruiterAuthController;
@@ -135,6 +136,12 @@ Route::prefix('admin')->group(function () {
         Route::put('roles/{role}', [RoleController::class, 'update']);
         Route::delete('roles/{role}', [RoleController::class, 'destroy']);
 
+        Route::get('permissions', [PermissionController::class, 'index']);
+        Route::post('permissions', [PermissionController::class, 'store']);
+        Route::get('permissions/{permission}', [PermissionController::class, 'show']);
+        Route::put('permissions/{permission}', [PermissionController::class, 'update']);
+        Route::delete('permissions/{permission}', [PermissionController::class, 'destroy']);
+
         Route::get('job-titles', [JobTitleController::class, 'index']);
         Route::post('job-titles', [JobTitleController::class, 'store']);
         Route::get('job-titles/{job_title}', [JobTitleController::class, 'show']);
@@ -150,6 +157,7 @@ Route::prefix('admin')->group(function () {
         Route::get('users', [UserController::class, 'index']);
         Route::post('users', [UserController::class, 'store']);
         Route::get('users/qualified', [UserController::class, 'qualified_index']);
+        Route::post('users/{user}/qualify', [UserController::class, 'qualify']);
         Route::get('users/{user}', [UserController::class, 'show']);
         Route::put('users/{user}', [UserController::class, 'update']);
         Route::delete('users/{user}', [UserController::class, 'destroy']);

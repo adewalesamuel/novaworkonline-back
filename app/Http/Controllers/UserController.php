@@ -254,7 +254,16 @@ class UserController extends Controller
         return response()->json($data);
     }
 
+    public function qualify(User $user) {
+        $user->is_qualified = true;
+        $user->save();
 
+        $data = [
+            'success' => true,
+        ];
+
+        return response()->json($data, 200);
+    }
 
     /**
      * Remove the specified resource from storage.

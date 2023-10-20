@@ -38,7 +38,7 @@ class Recruiter extends Authenticatable
     */
     public function sendPasswordResetNotification($token): void
     {
-        $url = env('APP_FRONT_RECRUITER_URL')."/nouveau-motdepasse?token=".$token;
+        $url = env('APP_RECRUITER_URL')."/nouveau-motdepasse?token=".$token;
 
         $this->notify(new ResetPasswordNotification($url));
     }

@@ -1,14 +1,14 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Models\Role;
+use App\Models\Permission;
 use Illuminate\Http\Request;
-use App\Http\Requests\StoreRoleRequest;
-use App\Http\Requests\UpdateRoleRequest;
+use App\Http\Requests\StorePermissionRequest;
+use App\Http\Requests\UpdatePermissionRequest;
 use Illuminate\Support\Str;
 
 
-class RoleController extends Controller
+class PermissionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,7 +19,7 @@ class RoleController extends Controller
     {
         $data = [
             'success' => true,
-            'roles' => Role::where('id', '>', -1)
+            'permissions' => Permission::where('id', '>', -1)
             ->orderBy('created_at', 'desc')->get()
         ];
 
@@ -42,37 +42,36 @@ class RoleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreRoleRequest $request)
+    public function store(StorePermissionRequest $request)
     {
         $validated = $request->validated();
 
-        $role = new Role;
+        $permission = new Permission;
 
-        $role->name = $validated['name'] ?? null;
-		$role->slug = Str::slug($validated['name']);
-		$role->permissions = $validated['permissions'] ?? null;
-
-        $role->save();
+        $permission->name = $validated['name'] ?? null;
+		$permission->slug = $validated['slug'] ?? null;
+		
+        $permission->save();
 
         $data = [
             'success'       => true,
-            'role'   => $role
+            'permission'   => $permission
         ];
-
+        
         return response()->json($data);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Role  $role
+     * @param  \App\Models\Permission  $permission
      * @return \Illuminate\Http\Response
      */
-    public function show(Role $role)
+    public function show(Permission $permission)
     {
         $data = [
             'success' => true,
-            'role' => $role
+            'permission' => $permission
         ];
 
         return response()->json($data);
@@ -81,10 +80,10 @@ class RoleController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Role  $role
+     * @param  \App\Models\Permission  $permission
      * @return \Illuminate\Http\Response
      */
-    public function edit(Role $role)
+    public function edit(Permission $permission)
     {
         //
     }
@@ -93,39 +92,39 @@ class RoleController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Role  $role
+     * @param  \App\Models\Permission  $permission
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateRoleRequest $request, Role $role)
+    public function update(UpdatePermissionRequest $request, Permission $permission)
     {
         $validated = $request->validated();
 
-        $role->name = $validated['name'] ?? null;
-		$role->permissions = $validated['permissions'] ?? null;
-
-        $role->save();
+        $permission->name = $validated['name'] ?? null;
+		$permission->slug = $validated['slug'] ?? null;
+		
+        $permission->save();
 
         $data = [
             'success'       => true,
-            'role'   => $role
+            'permission'   => $permission
         ];
-
+        
         return response()->json($data);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Role  $role
+     * @param  \App\Models\Permission  $permission
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Role $role)
-    {
-        $role->delete();
+    public function destroy(Permission $permission)
+    {   
+        $permission->delete();
 
         $data = [
             'success' => true,
-            'role' => $role
+            'permission' => $permission
         ];
 
         return response()->json($data);

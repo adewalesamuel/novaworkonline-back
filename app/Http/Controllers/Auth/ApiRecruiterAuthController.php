@@ -2,17 +2,19 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Recruiter;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Auth\Events\PasswordReset;
+use App\Models\Recruiter;
 use App\Http\Requests\StoreRecruiterRequest;
 use App\Http\Requests\ForgotPasswordRequest;
 use App\Http\Requests\ResetPasswordRequest;
-use Illuminate\Support\Facades\Password;
-use Illuminate\Auth\Events\PasswordReset;
+use App\Http\Controllers\Controller;
+use App\Jobs\AdminMailNotificationJob;
+use App\Notifications\RecruiterRegisterNotification;
 
 class ApiRecruiterAuthController extends Controller
 {
@@ -56,6 +58,9 @@ class ApiRecruiterAuthController extends Controller
         $recruiter->api_token = $token;
 
         $recruiter->save();
+
+        AdminMailNotificationJob::dispatchAfterResponse(
+            new RecruiterRegisterNotification($recruiter));
 
         $data = [
             'success'       => true,
