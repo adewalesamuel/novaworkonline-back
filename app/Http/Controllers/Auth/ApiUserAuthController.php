@@ -50,6 +50,7 @@ class ApiUserAuthController extends Controller
         $user->firstname = $validated['firstname'] ?? null;
 		$user->lastname = $validated['lastname'] ?? null;
 		$user->email = $validated['email'] ?? null;
+		$user->job_title_id = $validated['job_title_id'] ?? null;
 		$user->password = $validated['password'] ?? null;
         $user->api_token = $token;
 

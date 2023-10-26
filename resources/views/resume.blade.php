@@ -8737,7 +8737,7 @@
 
             <header class="resume-header pt-4 pt-md-0">
                 <div class="media flex-column flex-md-row">
-                    <a ><img src="{{$resume['content']->personal_infos->photo_url}}" alt="image" border="0"width="220" height="220" style="object-fit:cover;"></a>
+                    <a ><img src="{{$resume['content']->personal_infos->photo_url ?? "http://via.placeholder.com/500x500"}}" alt="image" border="0"width="220" height="220" style="object-fit:cover;"></a>
 
                     <div class="media-body p-4 d-flex flex-column flex-md-row mx-auto mx-lg-0">
                         <div class="primary-info">

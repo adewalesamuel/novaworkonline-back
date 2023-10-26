@@ -80,20 +80,20 @@ class SubscriptionPackController extends Controller
     {
         $validated = $request->validated();
 
-        $subscriptionpack = new SubscriptionPack;
+        $subscription_pack = new SubscriptionPack;
 
-        $subscriptionpack->name = $validated['name'] ?? null;
-		$subscriptionpack->slug = Str::slug($validated['name']);
-		$subscriptionpack->description = $validated['description'] ?? null;
-		$subscriptionpack->price = $validated['price'] ?? null;
-		$subscriptionpack->duration = $validated['duration'] ?? null;
-		$subscriptionpack->type = $validated['type'] ?? null;
+        $subscription_pack->name = $validated['name'] ?? null;
+		$subscription_pack->slug = Str::slug($validated['name']);
+		$subscription_pack->description = $validated['description'] ?? null;
+		$subscription_pack->price = $validated['price'] ?? null;
+		$subscription_pack->duration = $validated['duration'] ?? null;
+		$subscription_pack->type = $validated['type'] ?? null;
 
-        $subscriptionpack->save();
+        $subscription_pack->save();
 
         $data = [
             'success'       => true,
-            'subscriptionpack'   => $subscriptionpack
+            'subscription_pack'   => $subscription_pack
         ];
 
         return response()->json($data);
@@ -102,14 +102,14 @@ class SubscriptionPackController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\SubscriptionPack  $subscriptionpack
+     * @param  \App\Models\SubscriptionPack  $subscription_pack
      * @return \Illuminate\Http\Response
      */
-    public function show(SubscriptionPack $subscriptionpack)
+    public function show(SubscriptionPack $subscription_pack)
     {
         $data = [
             'success' => true,
-            'subscriptionpack' => $subscriptionpack
+            'subscription_pack' => $subscription_pack
         ];
 
         return response()->json($data);
@@ -118,10 +118,10 @@ class SubscriptionPackController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\SubscriptionPack  $subscriptionpack
+     * @param  \App\Models\SubscriptionPack  $subscription_pack
      * @return \Illuminate\Http\Response
      */
-    public function edit(SubscriptionPack $subscriptionpack)
+    public function edit(SubscriptionPack $subscription_pack)
     {
         //
     }
@@ -130,25 +130,25 @@ class SubscriptionPackController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\SubscriptionPack  $subscriptionpack
+     * @param  \App\Models\SubscriptionPack  $subscription_pack
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateSubscriptionPackRequest $request, SubscriptionPack $subscriptionpack)
+    public function update(UpdateSubscriptionPackRequest $request, SubscriptionPack $subscription_pack)
     {
         $validated = $request->validated();
 
-        $subscriptionpack->name = $validated['name'] ?? null;
-		$subscriptionpack->slug = Str::slug($validated['name']);
-		$subscriptionpack->description = $validated['description'] ?? null;
-		$subscriptionpack->price = $validated['price'] ?? null;
-		$subscriptionpack->duration = $validated['duration'] ?? null;
-		$subscriptionpack->type = $validated['type'] ?? null;
+        $subscription_pack->name = $validated['name'] ?? null;
+		$subscription_pack->slug = Str::slug($validated['name']);
+		$subscription_pack->description = $validated['description'] ?? null;
+		$subscription_pack->price = $validated['price'] ?? null;
+		$subscription_pack->duration = $validated['duration'] ?? null;
+		$subscription_pack->type = $validated['type'] ?? null;
 
-        $subscriptionpack->save();
+        $subscription_pack->save();
 
         $data = [
             'success'       => true,
-            'subscriptionpack'   => $subscriptionpack
+            'subscription_pack'   => $subscription_pack
         ];
 
         return response()->json($data);
@@ -157,16 +157,16 @@ class SubscriptionPackController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\SubscriptionPack  $subscriptionpack
+     * @param  \App\Models\SubscriptionPack  $subscription_pack
      * @return \Illuminate\Http\Response
      */
-    public function destroy(SubscriptionPack $subscriptionpack)
+    public function destroy(SubscriptionPack $subscription_pack)
     {
-        $subscriptionpack->delete();
+        $subscription_pack->delete();
 
         $data = [
             'success' => true,
-            'subscriptionpack' => $subscriptionpack
+            'subscription_pack' => $subscription_pack
         ];
 
         return response()->json($data);

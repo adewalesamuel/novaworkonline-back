@@ -33,8 +33,8 @@ class StoreUserRequest extends FormRequest
 			'phone_number' => 'nullable|string',
 			'city' => 'nullable|string',
 			'profil_img_url' => 'nullable|string',
-			'country_id' => 'nullable|integer',
-			'job_title_id' => 'nullable|integer',
+			'country_id' => 'nullable||exists:countries,id',
+			'job_title_id' => 'required|integer|exists:job_titles,id',
 
         ];
     }
