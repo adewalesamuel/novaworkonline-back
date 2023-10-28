@@ -16,9 +16,25 @@ use App\Http\Controllers\UserController;
 |
 */
 
+Route::get('/mon-cv/apercu/{token}', [UserController::class, 'resume_preview']);
+Route::get('/candidats/{user}/cv', [UserController::class, 'resume']);
+
+Route::domain('admin.localhost.test')->group(function(){
+    Route::get('/{any}', function () {
+        return view('admin');
+    })->where('any', '.*');
+});
+Route::domain('recruteur.localhost.test')->group(function(){
+    Route::get('/{any}', function () {
+        return view('recruiter');
+    })->where('any', '.*');
+});
+
+Route::get('/{any}', function () {
+    return view('user');
+})->where('any', '.*');
+
 Route::get('/nouveau-motdepasse', function() {
     return "Erreur";
 })->name('password.reset');
 
-Route::get('/mon-cv/apercu/{token}', [UserController::class, 'resume_preview']);
-Route::get('/candidats/{user}/cv', [UserController::class, 'resume']);
