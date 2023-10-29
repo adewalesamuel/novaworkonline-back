@@ -46,7 +46,7 @@ class User extends Authenticatable
 	}
 	public function job_title()
 	{
-		return $this->belongsTo(Jobtitle::class);
+		return $this->belongsTo(JobTitle::class);
 	}
 	public function resume()
 	{
