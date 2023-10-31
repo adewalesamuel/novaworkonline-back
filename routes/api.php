@@ -77,6 +77,7 @@ Route::prefix('recruiter')->group(function () {
     Route::post('register', [ApiRecruiterAuthController::class, 'register']);
     Route::post('forgot-password', [ApiRecruiterAuthController::class, 'forgot_password']);
     Route::post('reset-password', [ApiRecruiterAuthController::class, 'reset_password']);
+    Route::get('users/qualified', [UserController::class, 'qualified_index']);
 
     Route::middleware(['auth.api_token:recruiter'])->group(function () {
         Route::post('logout', [ApiRecruiterAuthController::class, 'logout']);
@@ -89,7 +90,6 @@ Route::prefix('recruiter')->group(function () {
         Route::get('subscriptions', [SubscriptionController::class, 'recruiter_index']);
         Route::post('subscriptions', [SubscriptionController::class, 'recruiter_store']);
 
-        Route::get('users/qualified', [UserController::class, 'qualified_index']);
         Route::get('users/{user}', [UserController::class, 'recruiter_show']);
         Route::get('users/{user}/resume', [ResumeController::class, 'resume']);
 
