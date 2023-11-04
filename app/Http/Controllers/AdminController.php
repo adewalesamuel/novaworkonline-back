@@ -8,9 +8,11 @@ use App\Models\Recruiter;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreAdminRequest;
 use App\Http\Requests\UpdateAdminRequest;
+use App\Http\Requests\MessageRequest;
 use Illuminate\Support\Str;
 use App\Http\Auth;
-
+use App\Mail\AdminMessage;
+use Illuminate\Support\Facades\Mail;
 
 class AdminController extends Controller
 {
@@ -181,6 +183,21 @@ class AdminController extends Controller
         ];
 
         return response()->json($data);
+    }
+
+    public function message(MessageRequest $request) {
+        $validated = $request->validated();
+
+        $admin = Auth::getUser($request, Auth::ADMIN);
+
+        Mail::to($validated['email'])
+        ->queue(new AdminMessage($validated['message']));
+
+        $data = [
+            'success' => true
+        ];
+
+        return response()->json($data, 200);
     }
 
     /**

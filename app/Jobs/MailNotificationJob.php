@@ -3,11 +3,11 @@
 namespace App\Jobs;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Notifications\Notification;
 
 class MailNotificationJob implements ShouldQueue
 {
@@ -21,7 +21,7 @@ class MailNotificationJob implements ShouldQueue
      *
      * @return void
      */
-    public function __construct($notifiable, $notification_instance)
+    public function __construct($notifiable, Notification $notification_instance)
     {
         $this->notifiable = $notifiable;
         $this->notification_instance = $notification_instance;
@@ -34,6 +34,6 @@ class MailNotificationJob implements ShouldQueue
      */
     public function handle()
     {
-        $this->notifiable.notify($notification_instance);
+        $this->notifiable->notify($this->notification_instance);
     }
 }

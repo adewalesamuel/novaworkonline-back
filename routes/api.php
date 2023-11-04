@@ -154,6 +154,8 @@ Route::prefix('admin')->group(function () {
         Route::put('admins/{admin}', [AdminController::class, 'update']);
         Route::delete('admins/{admin}', [AdminController::class, 'destroy']);
 
+        Route::post('message', [AdminController::class, 'message']);
+
         Route::get('users', [UserController::class, 'index']);
         Route::post('users', [UserController::class, 'store']);
         Route::get('users/qualified', [UserController::class, 'qualified_index']);
