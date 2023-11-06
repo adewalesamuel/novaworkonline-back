@@ -153,6 +153,7 @@ class UserController extends Controller
         $user['resume'] = $user->resume;
         $user['country'] = $user->country;
         $user['job_title'] = $user->job_title;
+        $user['employee'] = $user->employee;
         $user['interview_request'] = InterviewRequest::where('user_id', $user->id)
         ->where('recruiter_id', $recruiter->id)->first();
 

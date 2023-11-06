@@ -24,9 +24,9 @@ class UpdateEmployeeRequest extends FormRequest
     public function rules()
     {
         return [
-            'user_id' => 'required|integer',
-			'recruiter_id' => 'required|integer',
-			'project_id' => 'required|integer',
+            'user_id' => 'nullable|integer|exists:users,id',
+			'recruiter_id' => 'nullable|integer|exists:recruiters,id',
+			'project_id' => 'nullable|integer|exists:projects,id',
 
         ];
     }

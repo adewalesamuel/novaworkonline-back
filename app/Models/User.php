@@ -56,6 +56,10 @@ class User extends Authenticatable
 	{
 		return $this->hasOne(InterViewRequest::class);
 	}
+	public function employee()
+	{
+		return $this->hasOne(Employee::class);
+	}
     /**
      * Send a password reset notification to the user.
      *

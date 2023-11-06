@@ -7,7 +7,7 @@ use App\Http\Requests\StoreEmployeeRequest;
 use App\Http\Requests\UpdateEmployeeRequest;
 use Illuminate\Support\Str;
 use App\Http\Auth;
-
+use Error;
 
 class EmployeeController extends Controller
 {
@@ -65,6 +65,33 @@ class EmployeeController extends Controller
 
         $employee->user_id = $validated['user_id'] ?? null;
 		$employee->recruiter_id = $validated['recruiter_id'] ?? null;
+		$employee->project_id = $validated['project_id'] ?? null;
+
+        $employee->save();
+
+        $data = [
+            'success'       => true,
+            'employee'   => $employee
+        ];
+
+        return response()->json($data);
+    }
+
+    public function recruiter_store(StoreEmployeeRequest $request)
+    {
+        $validated = $request->validated();
+        $recruiter = Auth::getUser($request, Auth::RECRUITER);
+
+        $hasEmployee = Employee::where('user_id', $validated['user_id'])
+        ->where('recruiter_id', $recruiter->id)->first();
+
+        if ($hasEmployee)
+            throw new Error(("L'employé exist déjà"));
+
+        $employee = new Employee;
+
+        $employee->user_id = $validated['user_id'] ?? null;
+		$employee->recruiter_id = $recruiter->id;
 		$employee->project_id = $validated['project_id'] ?? null;
 
         $employee->save();
