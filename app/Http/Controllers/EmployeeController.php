@@ -7,7 +7,10 @@ use App\Http\Requests\StoreEmployeeRequest;
 use App\Http\Requests\UpdateEmployeeRequest;
 use Illuminate\Support\Str;
 use App\Http\Auth;
+use App\Models\InterviewRequest;
 use Error;
+use Exception;
+use Illuminate\Support\Facades\DB;
 
 class EmployeeController extends Controller
 {
@@ -81,20 +84,41 @@ class EmployeeController extends Controller
     {
         $validated = $request->validated();
         $recruiter = Auth::getUser($request, Auth::RECRUITER);
+        $user_id = $validated['user_id'];
 
-        $hasEmployee = Employee::where('user_id', $validated['user_id'])
-        ->where('recruiter_id', $recruiter->id)->first();
+        try {
+            DB::beginTransaction();
 
-        if ($hasEmployee)
-            throw new Error(("L'employé exist déjà"));
+            $hasEmployee = Employee::where('user_id', $user_id)
+            ->where('recruiter_id', $recruiter->id)->first();
 
-        $employee = new Employee;
+            if ($hasEmployee) throw new Exception(("L'employé exist déjà"));
 
-        $employee->user_id = $validated['user_id'] ?? null;
-		$employee->recruiter_id = $recruiter->id;
-		$employee->project_id = $validated['project_id'] ?? null;
+            $employee = new Employee;
+            $interview_request = InterviewRequest::where('recruiter_id',
+            $recruiter->id)->where('user_id', $user_id)->firstOrFail();
 
-        $employee->save();
+
+            $interview_request->status = 'validated';
+
+            $employee->user_id = $user_id ?? null;
+            $employee->recruiter_id = $recruiter->id;
+            $employee->project_id = $validated['project_id'] ?? null;
+
+            $employee->save();
+            $interview_request->save();
+
+            DB::commit();
+        } catch (\Throwable $th) {
+            DB::rollBack();
+
+            $data = [
+                'error' => true,
+                'message' => $th->getMessage()
+            ];
+
+            return response()->json($data, 500);
+        }
 
         $data = [
             'success'       => true,

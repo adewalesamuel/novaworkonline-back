@@ -27,6 +27,7 @@ class UpdateInterviewRequestRequest extends FormRequest
             'status' => 'required|string',
 			'recruiter_id' => 'required|integer',
 			'user_id' => 'required|integer',
+            'description' => 'nullable|string',
 
         ];
     }

@@ -95,6 +95,7 @@ Route::prefix('recruiter')->group(function () {
 
         Route::get('interview-requests', [InterviewRequestController::class, 'recruiter_index']);
         Route::post('interview-requests', [InterviewRequestController::class, 'recruiter_store']);
+        Route::post('interview-requests/{interview_request}/reject', [InterviewRequestController::class, 'reject']);
 
         Route::get('employees', [EmployeeController::class, 'recruiter_index']);
         Route::post('employees', [EmployeeController::class, 'recruiter_store']);

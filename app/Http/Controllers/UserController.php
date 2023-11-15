@@ -155,7 +155,7 @@ class UserController extends Controller
         $user['job_title'] = $user->job_title;
         $user['employee'] = $user->employee;
         $user['interview_request'] = InterviewRequest::where('user_id', $user->id)
-        ->where('recruiter_id', $recruiter->id)->first();
+        ->where('recruiter_id', $recruiter->id)->orderBy('created_at', 'desc')->first();
 
         $data = [
             'success' => true,

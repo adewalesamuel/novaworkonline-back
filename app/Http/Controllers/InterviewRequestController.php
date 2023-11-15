@@ -68,6 +68,7 @@ class InterviewRequestController extends Controller
 
 		$interview_request->recruiter_id = $validated['recruiter_id'] ?? null;
 		$interview_request->user_id = $validated['user_id'] ?? null;
+		$interview_request->description = $validated['description'] ?? null;
 
         $interview_request->save();
 
@@ -88,6 +89,7 @@ class InterviewRequestController extends Controller
 
 		$interview_request->recruiter_id = $recruiter->id;
 		$interview_request->user_id = $validated['user_id'] ?? null;
+		$interview_request->description = $validated['description'] ?? null;
 
         $interview_request->save();
 
@@ -140,13 +142,15 @@ class InterviewRequestController extends Controller
      * @param  \App\Models\InterviewRequest  $interview_request
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateInterviewRequestRequest $request, InterviewRequest $interview_request)
+    public function update(UpdateInterviewRequestRequest $request,
+    InterviewRequest $interview_request)
     {
         $validated = $request->validated();
 
         $interview_request->status = $validated['status'] ?? null;
 		$interview_request->recruiter_id = $validated['recruiter_id'] ?? null;
 		$interview_request->user_id = $validated['user_id'] ?? null;
+		$interview_request->description = $validated['description'] ?? null;
 		$interview_request->recruiter_id = $validated['recruiter_id'] ?? null;
 
         $interview_request->save();
@@ -157,6 +161,20 @@ class InterviewRequestController extends Controller
         ];
 
         return response()->json($data);
+    }
+
+    public function reject(Request $request, InterviewRequest $interview_request) {
+        $interview_request->status = 'rejected';
+        $interview_request->description = $request->input('description');
+
+        $interview_request->save();
+
+        $data = [
+            'sucess' => true,
+            'interview_request' => $interview_request
+        ];
+
+        return response()->json($data, 200);
     }
 
     /**
