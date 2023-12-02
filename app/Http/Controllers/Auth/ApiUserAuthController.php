@@ -15,6 +15,7 @@ use App\Http\Requests\ForgotPasswordRequest;
 use App\Http\Requests\ResetPasswordRequest;
 use App\Jobs\AdminMailNotificationJob;
 use App\Notifications\UserRegisterNotification;
+use Illuminate\Support\Facades\DB;
 
 class ApiUserAuthController extends Controller
 {

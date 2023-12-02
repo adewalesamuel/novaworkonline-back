@@ -9,8 +9,9 @@ use App\Http\Requests\UpdateInterviewRequestRequest;
 use Illuminate\Support\Str;
 use App\Http\Auth;
 use App\Jobs\AdminMailNotificationJob;
+use App\Jobs\MailNotificationJob;
 use App\Notifications\InterviewRequestNotification;
-
+use App\Notifications\InterviewRequestUserNotification;
 
 class InterviewRequestController extends Controller
 {
@@ -85,6 +86,8 @@ class InterviewRequestController extends Controller
         $validated = $request->validated();
         $recruiter = Auth::getUser($request, Auth::RECRUITER);
 
+        return User::findOrFail($validated['user_id']);
+
         $interview_request = new InterviewRequest;
 
 		$interview_request->recruiter_id = $recruiter->id;
@@ -95,6 +98,10 @@ class InterviewRequestController extends Controller
 
         AdminMailNotificationJob::dispatchAfterResponse(
             new InterviewRequestNotification($interview_request));
+        MailNotificationJob::dispatchAfterResponse(
+            User::findOrFail($validated['user_id']),
+            new InterviewRequestUserNotification($interview_request)
+        );
 
         $data = [
             'success'       => true,

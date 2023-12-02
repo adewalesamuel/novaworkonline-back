@@ -33,8 +33,3 @@ Route::domain('recruteur.novaworkonline.com')->group(function(){
 Route::get('/{any}', function () {
     return view('user');
 })->where('any', '.*');
-
-Route::get('/nouveau-motdepasse', function() {
-    return "Erreur";
-})->name('password.reset');
-
