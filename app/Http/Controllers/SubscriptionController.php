@@ -47,7 +47,7 @@ class SubscriptionController extends Controller
             ->where('id', '>', -1)
             ->where('subscriber_id', $user->id)
             ->where('type', 'user')
-            ->orderBy('created_at', 'desc')->first()
+            ->orderBy('created_at', 'desc')->paginate()
         ];
 
         return response()->json($data);
@@ -59,11 +59,10 @@ class SubscriptionController extends Controller
 
         $data = [
             'success' => true,
-            'subscription' => Subscription::with(['subscription_pack'])
-            ->where('id', '>', -1)
+            'subscriptions' => Subscription::with(['subscription_pack'])
             ->where('subscriber_id', $recruiter->id)
             ->where('type', 'recruiter')
-            ->orderBy('created_at', 'desc')->first()
+            ->orderBy('created_at', 'desc')->paginate()
         ];
 
         return response()->json($data);
@@ -127,6 +126,7 @@ class SubscriptionController extends Controller
 
         $subscription->type = 'user';
 		$subscription->amount = $subscription_pack->price;
+        $subscription->payment_status = 'valdated';
 		$subscription->payment_mode = $validated['payment_mode'] ?? null;
 		$subscription->subscription_pack_id = $validated['subscription_pack_id'] ?? null;
 		$subscription->expiration_date = Carbon::now()->addMonth($subscription_pack->duration ?? 1);
@@ -159,6 +159,7 @@ class SubscriptionController extends Controller
         $subscription->type = 'recruiter';
 		$subscription->amount = $subscription_pack->price;
 		$subscription->payment_mode = $validated['payment_mode'] ?? 'other';
+		$subscription->payment_status = 'valdated';
 		$subscription->subscription_pack_id = $validated['subscription_pack_id'] ?? null;
 		$subscription->expiration_date = Carbon::now()->addMonth($subscription_pack->duration ?? 1);
 		$subscription->subscriber_id = $recruiter->id;

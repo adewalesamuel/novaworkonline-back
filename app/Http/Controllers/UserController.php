@@ -10,7 +10,8 @@ use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use Illuminate\Support\Str;
 use App\Http\Auth;
-
+use App\Models\Subscription;
+use Carbon\Carbon;
 
 class UserController extends Controller
 {
@@ -149,6 +150,13 @@ class UserController extends Controller
     public function recruiter_show(Request $request, User $user)
     {
         $recruiter = Auth::getUser($request, Auth::RECRUITER);
+
+        $subscription = Subscription::where('type', 'recruiter')
+        ->where('subscriber_id', $recruiter->id)
+        ->orderBy('created_at', 'desc')->firstOrFail();
+
+        if (Carbon::parse($subscription->expiration_date)->lt(Carbon::today()))
+            throw new \Exception('Souscription non trouvé ou expirée',1);
 
         $user['resume'] = $user->resume;
         $user['country'] = $user->country;
