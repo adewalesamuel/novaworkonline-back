@@ -22,7 +22,8 @@ class RecruiterController extends Controller
         $data = [
             'success' => true,
             'qualified_user_count' => User::where('is_qualified', true)->count(),
-            'interview_request_count' => InterviewRequest::where('recruiter_id', $recruiter->id)->count(),
+            'interview_request_count' => InterviewRequest::where('recruiter_id', $recruiter->id)
+            ->where('status', '!=', 'validated')->count(),
             'employees_count' => Employee::where('recruiter_id', $recruiter->id)->count(),
             'projects_count' => Project::where('recruiter_id', $recruiter->id)->count()
         ];

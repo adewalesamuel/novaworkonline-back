@@ -45,6 +45,8 @@ class UserController extends Controller
 
     public function qualified_index(Request $request) {
         $job_title_id = $request->input('job_title_id');
+
+        //get where not in interview-request && not in employee
         $users =  User::where('id', '>', -1)->with(['job_title'])
         ->where('is_active', true)->where('is_qualified', true);
 

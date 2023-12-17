@@ -39,6 +39,7 @@ class InterviewRequestController extends Controller
             'success' => true,
             'interview_requests' => InterviewRequest::with(['user'])
             ->where('id', '>', -1)->where('recruiter_id', $recruiter->id)
+            ->where('status', '!=', 'validated')
             ->orderBy('created_at', 'desc')->paginate()
         ];
 
@@ -85,8 +86,6 @@ class InterviewRequestController extends Controller
     {
         $validated = $request->validated();
         $recruiter = Auth::getUser($request, Auth::RECRUITER);
-
-        return User::findOrFail($validated['user_id']);
 
         $interview_request = new InterviewRequest;
 
