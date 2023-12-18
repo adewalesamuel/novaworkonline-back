@@ -39,7 +39,7 @@ class InterviewRequestController extends Controller
             'success' => true,
             'interview_requests' => InterviewRequest::with(['user'])
             ->where('id', '>', -1)->where('recruiter_id', $recruiter->id)
-            ->where('status', '!=', 'validated')
+            ->where('status', 'pending')
             ->orderBy('created_at', 'desc')->paginate()
         ];
 

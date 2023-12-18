@@ -10,6 +10,7 @@ use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use Illuminate\Support\Str;
 use App\Http\Auth;
+use App\Models\Employee;
 use App\Models\Subscription;
 use Carbon\Carbon;
 
@@ -45,10 +46,30 @@ class UserController extends Controller
 
     public function qualified_index(Request $request) {
         $job_title_id = $request->input('job_title_id');
+        $recruiter = Auth::getUser($request, Auth::RECRUITER);
 
-        //get where not in interview-request && not in employee
         $users =  User::where('id', '>', -1)->with(['job_title'])
         ->where('is_active', true)->where('is_qualified', true);
+
+        if ($recruiter) {
+            $interview_requests_user_ids = collect(
+                InterviewRequest::where('recruiter_id', $recruiter->id)
+                ->where('status', '!=', 'rejected')->get())->map(
+                function($interview_request) {
+                    return $interview_request->user_id;
+                }
+            );
+            $employees_user_ids = collect(
+                Employee::where('recruiter_id', $recruiter->id)->get())
+                ->map(
+                function($employee) {
+                    return $employee->user_id;
+                }
+            );
+
+            $users = $users->whereNotIn('id',
+            [...$interview_requests_user_ids, ...$employees_user_ids]);
+        }
 
         if ($job_title_id != null)
             $users = $users->where('job_title_id', $job_title_id);
@@ -155,10 +176,13 @@ class UserController extends Controller
 
         $subscription = Subscription::where('type', 'recruiter')
         ->where('subscriber_id', $recruiter->id)
-        ->orderBy('created_at', 'desc')->firstOrFail();
+        ->orderBy('created_at', 'desc')->first();
+
+        if (!$subscription)
+            throw new \Exception('Vous n\'avez pas de souscription',1);
 
         if (Carbon::parse($subscription->expiration_date)->lt(Carbon::today()))
-            throw new \Exception('Souscription non trouvé ou expirée',1);
+            throw new \Exception('Votre souscription à expirée',1);
 
         $user['resume'] = $user->resume;
         $user['country'] = $user->country;
