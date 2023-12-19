@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Http\Auth;
 use App\Models\JobTitle;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreJobTitleRequest;
@@ -77,6 +78,17 @@ class JobTitleController extends Controller
         ];
 
         return response()->json($data);
+    }
+
+    public function user_show(Request $request) {
+        $user = Auth::getUser($request, Auth::USER);
+
+        $data = [
+            'success' => true,
+            'job_title' => $user->job_title
+        ];
+
+        return response()->json($data, 200);
     }
 
     /**
