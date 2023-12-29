@@ -19,11 +19,10 @@ class UserController extends Controller
 
     public function analytics(Request $request) {
         $user = Auth::getUser($request, Auth::USER);
-        $test = UserTest::where('user_id', $user->id)->first();
 
         $data = [
             'success' => true,
-            'test_score' => $test->score ?? 0
+            'test_score' => $user->score ?? 0
         ];
 
         return response()->json($data, 200);
@@ -139,6 +138,9 @@ class UserController extends Controller
 		$user->api_token = Str::random(60);
 		$user->country_id = $validated['country_id'] ?? null;
 		$user->job_title_id = $validated['job_title_id'] ?? null;
+		$user->certificat_url = $validated['certificat_url'] ?? null;
+		$user->video_url = $validated['video_url'] ?? null;
+		$user->score = $validated['score'] ?? null;
 
         $user->save();
 
@@ -251,6 +253,9 @@ class UserController extends Controller
 		$user->profil_img_url = $validated['profil_img_url'] ?? $user->profil_img_url;
 		$user->country_id = $validated['country_id'] ?? null;
 		$user->job_title_id = $validated['job_title_id'] ?? null;
+        $user->certificat_url = $validated['certificat_url'] ?? null;
+		$user->video_url = $validated['video_url'] ?? null;
+		$user->score = $validated['score'] ?? null;
 
         if ($validated['password'])
             $user->password = $validated['password'];
@@ -280,6 +285,7 @@ class UserController extends Controller
 		$user->profil_img_url = $validated['profil_img_url'] ?? null;
 		$user->country_id = $validated['country_id'] ?? null;
 		$user->job_title_id = $validated['job_title_id'] ?? null;
+		$user->video_url = $validated['video_url'] ?? null;
 
         $user->save();
 

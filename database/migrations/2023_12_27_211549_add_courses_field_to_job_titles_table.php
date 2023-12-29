@@ -26,7 +26,7 @@ class AddCoursesFieldToJobTitlesTable extends Migration
     public function down()
     {
         Schema::table('job_titles', function (Blueprint $table) {
-            //
+            $table->dropColumn('courses');
         });
     }
 }

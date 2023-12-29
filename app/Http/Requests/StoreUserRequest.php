@@ -35,6 +35,9 @@ class StoreUserRequest extends FormRequest
 			'profil_img_url' => 'nullable|string',
 			'country_id' => 'nullable||exists:countries,id',
 			'job_title_id' => 'required|integer|exists:job_titles,id',
+			'certificat_url' => 'nullable|string',
+			'video_url' => 'nullable|string',
+			'score' => 'nullable|integer',
 
         ];
     }

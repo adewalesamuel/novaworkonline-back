@@ -35,6 +35,9 @@ class UpdateUserRequest extends FormRequest
 			'profil_img_url' => 'nullable|string',
 			'country_id' => 'nullable|integer|exists:countries,id',
 			'job_title_id' => 'nullable|integer|exists:job_titles,id',
+            'certificat_url' => 'nullable|string',
+			'video_url' => 'nullable|string',
+			'score' => 'nullable|integer',
 
         ];
     }
