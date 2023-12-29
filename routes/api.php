@@ -50,7 +50,7 @@ Route::middleware(['auth.api_token'])->group(function () {
     Route::get('profile', [UserController::class, 'profile']);
     Route::put('profile', [UserController::class, 'update_profile']);
 
-    Route::get('profile/job-title', [JobTitleController::class, 'user_show']);
+    Route::get('profile/job-title-user', [JobTitleController::class, 'user_show']);
 
     Route::get('subscription-packs', [SubscriptionPackController::class, 'user_index']);
 
