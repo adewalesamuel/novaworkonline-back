@@ -180,14 +180,6 @@ class UserController extends Controller
         ->where('subscriber_id', $recruiter->id)
         ->orderBy('created_at', 'desc')->first();
 
-        //return josn response with message
-        if (!$subscription)
-            throw new \Exception('Vous n\'avez pas de souscription',1);
-
-        //return josn response with message
-        if (Carbon::parse($subscription->expiration_date)->lt(Carbon::today()))
-            throw new \Exception('Votre souscription à expirée',1);
-
         $user['resume'] = $user->resume;
         $user['country'] = $user->country;
         $user['job_title'] = $user->job_title;

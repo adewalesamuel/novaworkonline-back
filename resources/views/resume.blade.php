@@ -8737,7 +8737,7 @@
 
             <header class="resume-header pt-4 pt-md-0">
                 <div class="media flex-column flex-md-row">
-                    <a ><img src="{{$resume['content']->personal_infos->photo_url ?? "http://via.placeholder.com/500x500"}}" alt="image" border="0"width="220" height="220" style="object-fit:cover;"></a>
+                    <a ><img src={{$resume['content']->personal_infos->photo_url ?? "http://via.placeholder.com/500x500"}} alt="image" border="0"width="220" height="220" style="object-fit:cover;"></a>
 
                     <div class="media-body p-4 d-flex flex-column flex-md-row mx-auto mx-lg-0">
                         <div class="primary-info">
@@ -8828,7 +8828,7 @@
                                         <li class="mb-2">
                                             <div class="resume-skill-name">{{ $skill->skill ?? "" }}</div>
                                             <div class="progress resume-progress">
-                                                <div class="progress-bar theme-progress-bar-dark" role="progressbar" style="width: {{ round(($skill->level * 100) / 10) }}%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                                <div class="progress-bar theme-progress-bar-dark" role="progressbar" style="width: {{ round(($skill->level ?? 0 * 100) / 10) }}%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                             </div>
                                         </li>
                                     </ul>
