@@ -43,6 +43,7 @@ Route::post('forgot-password', [ApiUserAuthController::class, 'forgot_password']
 Route::post('reset-password', [ApiUserAuthController::class, 'reset_password']);
 Route::get('job-titles', [JobTitleController::class, 'index']);
 Route::get('countries', [CountryController::class, 'index']);
+Route::get('users/qualified', [UserController::class, 'qualified_index']);
 
 Route::middleware(['auth.api_token'])->group(function () {
     Route::post('logout', [ApiUserAuthController::class, 'logout']);

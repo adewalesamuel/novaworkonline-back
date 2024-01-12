@@ -16,7 +16,7 @@ class Auth {
     public static function getUser(Request $request, string $type='user')
     {
         $token = $request->header('Authorization') ?
-        explode(" ", $request->header('Authorization'))[1] : null;
+        explode(" ", $request->header('Authorization'))[1] : "";
         $user = null;
 
         switch ($type) {
@@ -24,7 +24,7 @@ class Auth {
                 $user = self::getAdminByToken($token);
                 break;
             case self::RECRUITER:
-                $user = self::getArtisanByToken($token);
+                $user = self::getRecruiter($token);
                 break;
             default:
                 $user = self::getUserByToken($token);
@@ -45,7 +45,7 @@ class Auth {
 
     }
 
-    private static function getArtisanByToken(string $token)
+    private static function getRecruiter(string $token)
     {
         return Recruiter::where('api_token', $token)->first();
     }
