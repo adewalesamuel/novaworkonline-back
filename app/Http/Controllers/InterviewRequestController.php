@@ -88,20 +88,20 @@ class InterviewRequestController extends Controller
     {
         $validated = $request->validated();
         $recruiter = Auth::getUser($request, Auth::RECRUITER);
-        $subscription = Subscription::where('type', 'recruiter')
-        ->where('subscriber_id', $recruiter->id)
-        ->orderBy('created_at', 'desc')->first();
+        // $subscription = Subscription::where('type', 'recruiter')
+        // ->where('subscriber_id', $recruiter->id)
+        // ->orderBy('created_at', 'desc')->first();
 
-        if (!$subscription)
-            throw new \Exception('Vous n\'avez pas de souscription',1);
+        // if (!$subscription)
+        //     throw new \Exception('Vous n\'avez pas de souscription',1);
 
-        //return josn response with message
-        if (Carbon::parse($subscription->expiration_date)->lt(Carbon::today()))
-            throw new \Exception('Votre souscription à expirée',1);
+        // //return josn response with message
+        // if (Carbon::parse($subscription->expiration_date)->lt(Carbon::today()))
+        //     throw new \Exception('Votre souscription à expirée',1);
 
-        //return josn response with message
-        if (Carbon::parse($subscription->expiration_date)->lt(Carbon::today()))
-            throw new \Exception('Votre souscription à expirée',1);
+        // //return josn response with message
+        // if (Carbon::parse($subscription->expiration_date)->lt(Carbon::today()))
+        //     throw new \Exception('Votre souscription à expirée',1);
 
         $interview_request = new InterviewRequest;
 
