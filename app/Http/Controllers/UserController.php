@@ -83,9 +83,7 @@ class UserController extends Controller
     }
 
     public function resume_preview(Request $request, $token) {
-        $user = User::where('api_token', $token)->first();
-
-        if (!$user) return response("Une erreur est survenue", 200);
+        $user = User::where('api_token', $token)->firstOrFail();
 
         $resume = collect(Resume::where('user_id', $user->id)
         ->orderBy('created_at', 'desc')->first());
@@ -95,10 +93,9 @@ class UserController extends Controller
     }
 
     public function resume(User $user) {
-        if (!$user) return response("Une erreur est survenue", 200);
-
         $resume = collect(Resume::where('user_id', $user->id)
-        ->orderBy('created_at', 'desc')->first());
+        ->orderBy('created_at', 'desc')->firstOrFail());
+
         $resume['content'] = json_decode($resume['content']);
 
         return view('resume', ['resume' => $resume, 'is_recruiter' => true]);
