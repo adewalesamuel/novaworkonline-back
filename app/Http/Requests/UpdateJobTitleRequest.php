@@ -26,6 +26,7 @@ class UpdateJobTitleRequest extends FormRequest
         return [
             'name' => 'nullable|string',
 			'description' => 'nullable|string',
+			'course_link_url' => 'nullable|string',
 			'icon_url' => 'nullable|string',
 
         ];

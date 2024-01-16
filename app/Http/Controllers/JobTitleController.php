@@ -52,6 +52,7 @@ class JobTitleController extends Controller
         $job_title->name = $validated['name'] ?? null;
 		$job_title->slug = Str::slug($validated['name']);
 		$job_title->description = $validated['description'] ?? null;
+		$job_title->course_link_url = $validated['description'] ?? null;
 		$job_title->icon_url = $validated['icon_url'] ?? null;
 
         $job_title->save();
@@ -116,6 +117,7 @@ class JobTitleController extends Controller
         $job_title->name = $validated['name'] ?? null;
 		$job_title->slug = Str::slug($validated['name']);
 		$job_title->description = $validated['description'] ?? null;
+		$job_title->course_link_url = $validated['course_link_url'] ?? null;
 		$job_title->icon_url = $validated['icon_url'] ?? null;
 
         $job_title->save();
