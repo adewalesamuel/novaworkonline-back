@@ -43,15 +43,18 @@ class InterviewRequestNotification extends Notification
     public function toMail($notifiable)
     {
         $recruiter = $this->interview_request->recruiter;
-        $recruitername = "$recruiter->lastname $recruiter->firstname";
+        $user = $this->interview_request->user;
+        $user_name = "$user->lastname $user->firstname";
+        $recruiter_name = "$recruiter->lastname $recruiter->firstname";
+        $company_name = $recruiter->company_name;
         $front_path = "/demandes-entretien/" . $this->interview_request->id;
 
         return (new MailMessage)
                     ->subject("Nouvelle Demande d'Entretien!")
-                    ->greeting('Bonjour Admin!')
-                    ->line("Le recruteur $recruitername viens de faire une demande d'entretien")
-                    ->action('Consulter la demande', url(env('APP_ADMIN_URL') . $front_path))
-                    ->line("Merci d'utiliser l'application!");
+                    ->greeting('Bonjour Novawork!')
+                    ->line("Le recruteur \"$recruiter_name\" de la compagnie \"$company_name\"
+                    souhaite inviter le candidat \"$user_name\" pour un entretien d'embauche")
+                    ->line("Veuillez l'informer dès que possible afin d'arrêter une date pour l'entretien.");
     }
 
     /**
