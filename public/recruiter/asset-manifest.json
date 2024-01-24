@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "https://recruteur.novaworkonline.com/recruiter/static/css/main.1cbae4f0.css",
-    "main.js": "https://recruteur.novaworkonline.com/recruiter/static/js/main.90dac358.js",
+    "main.css": "https://recruteur.novaworkonline.com/recruiter/static/css/main.510ec07e.css",
+    "main.js": "https://recruteur.novaworkonline.com/recruiter/static/js/main.0d7d9aea.js",
     "static/js/787.373d9e7c.chunk.js": "https://recruteur.novaworkonline.com/recruiter/static/js/787.373d9e7c.chunk.js",
     "static/media/fontawesome-webfont.svg?v=4.7.0": "https://recruteur.novaworkonline.com/recruiter/static/media/fontawesome-webfont.c1e38fd9e0e74ba58f7a.svg",
     "static/media/ionicons.svg?v=2.0.0": "https://recruteur.novaworkonline.com/recruiter/static/media/ionicons.b45d332f6829d6813600.svg",
@@ -16,12 +16,12 @@
     "static/media/ionicons.woff?v=2.0.0": "https://recruteur.novaworkonline.com/recruiter/static/media/ionicons.0b4ad6170d93c4aa91ee.woff",
     "static/media/img0.jpg": "https://recruteur.novaworkonline.com/recruiter/static/media/img0.43435a66a8cb16bdf9ee.jpg",
     "index.html": "https://recruteur.novaworkonline.com/recruiter/index.html",
-    "main.1cbae4f0.css.map": "https://recruteur.novaworkonline.com/recruiter/static/css/main.1cbae4f0.css.map",
-    "main.90dac358.js.map": "https://recruteur.novaworkonline.com/recruiter/static/js/main.90dac358.js.map",
+    "main.510ec07e.css.map": "https://recruteur.novaworkonline.com/recruiter/static/css/main.510ec07e.css.map",
+    "main.0d7d9aea.js.map": "https://recruteur.novaworkonline.com/recruiter/static/js/main.0d7d9aea.js.map",
     "787.373d9e7c.chunk.js.map": "https://recruteur.novaworkonline.com/recruiter/static/js/787.373d9e7c.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.1cbae4f0.css",
-    "static/js/main.90dac358.js"
+    "static/css/main.510ec07e.css",
+    "static/js/main.0d7d9aea.js"
   ]
 }
