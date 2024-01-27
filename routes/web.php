@@ -24,7 +24,7 @@ Route::domain('admin.novaworkonline.com')->group(function(){
         return view('admin');
     })->where('any', '.*');
 });
-Route::domain('recruteur.localhost.test')->group(function(){
+Route::domain('recruteur.novaworkonline.com')->group(function(){
     Route::get('/{any}', function () {
         return view('recruiter');
     })->where('any', '.*');
