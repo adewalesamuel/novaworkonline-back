@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "https://admin.novaworkonline.com/admin/static/css/main.ded5abcc.css",
-    "main.js": "https://admin.novaworkonline.com/admin/static/js/main.489bde28.js",
+    "main.css": "https://admin.novaworkonline.com/admin/static/css/main.facf9035.css",
+    "main.js": "https://admin.novaworkonline.com/admin/static/js/main.81d97b0f.js",
     "static/js/787.58cd9d3c.chunk.js": "https://admin.novaworkonline.com/admin/static/js/787.58cd9d3c.chunk.js",
     "static/media/fontawesome-webfont.svg?v=4.7.0": "https://admin.novaworkonline.com/admin/static/media/fontawesome-webfont.c1e38fd9e0e74ba58f7a.svg",
     "static/media/ionicons.svg?v=2.0.0": "https://admin.novaworkonline.com/admin/static/media/ionicons.b45d332f6829d6813600.svg",
@@ -13,15 +13,15 @@
     "static/media/fontawesome-webfont.woff?v=4.7.0": "https://admin.novaworkonline.com/admin/static/media/fontawesome-webfont.f691f37e57f04c152e23.woff",
     "static/media/fontawesome-webfont.woff2?v=4.7.0": "https://admin.novaworkonline.com/admin/static/media/fontawesome-webfont.20fd1704ea223900efa9.woff2",
     "static/media/ionicons.woff?v=2.0.0": "https://admin.novaworkonline.com/admin/static/media/ionicons.0b4ad6170d93c4aa91ee.woff",
-    "static/media/candidats-icon.png": "https://admin.novaworkonline.com/admin/static/media/candidats-icon.de0f75d6186b009d15ea.png",
-    "static/media/recruteurs-icon.png": "https://admin.novaworkonline.com/admin/static/media/recruteurs-icon.cdc9d0aaf470f4e5e7c7.png",
+    "static/media/candidat.png": "https://admin.novaworkonline.com/admin/static/media/candidat.6ddddd1b79e3fc110097.png",
+    "static/media/candidat-qualifie.png": "https://admin.novaworkonline.com/admin/static/media/candidat-qualifie.e45528bbe765a0f5653b.png",
     "index.html": "https://admin.novaworkonline.com/admin/index.html",
-    "main.ded5abcc.css.map": "https://admin.novaworkonline.com/admin/static/css/main.ded5abcc.css.map",
-    "main.489bde28.js.map": "https://admin.novaworkonline.com/admin/static/js/main.489bde28.js.map",
+    "main.facf9035.css.map": "https://admin.novaworkonline.com/admin/static/css/main.facf9035.css.map",
+    "main.81d97b0f.js.map": "https://admin.novaworkonline.com/admin/static/js/main.81d97b0f.js.map",
     "787.58cd9d3c.chunk.js.map": "https://admin.novaworkonline.com/admin/static/js/787.58cd9d3c.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.ded5abcc.css",
-    "static/js/main.489bde28.js"
+    "static/css/main.facf9035.css",
+    "static/js/main.81d97b0f.js"
   ]
 }
