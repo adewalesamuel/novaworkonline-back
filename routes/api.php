@@ -42,6 +42,7 @@ Route::post('register', [ApiUserAuthController::class, 'register']);
 Route::post('forgot-password', [ApiUserAuthController::class, 'forgot_password']);
 Route::post('reset-password', [ApiUserAuthController::class, 'reset_password']);
 Route::get('job-titles', [JobTitleController::class, 'index']);
+Route::get('job-titles/{slug}', [JobTitleController::class, 'show_by_slug']);
 Route::get('countries', [CountryController::class, 'index']);
 Route::get('users/qualified', [UserController::class, 'qualified_index']);
 

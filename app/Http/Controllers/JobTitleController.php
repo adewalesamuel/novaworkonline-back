@@ -81,6 +81,15 @@ class JobTitleController extends Controller
         return response()->json($data);
     }
 
+    public function show_by_slug(Request $request, string $slug) {
+        $data = [
+            'success' => true,
+            'job_title' => JobTitle::where('slug', $slug)->firstOrFail()
+        ];
+
+        return response()->json($data, 200);
+    }
+
     public function user_show(Request $request) {
         $user = Auth::getUser($request, Auth::USER);
 
