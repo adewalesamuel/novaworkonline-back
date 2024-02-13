@@ -245,6 +245,9 @@ class UserController extends Controller
         $user->certificat_url = $validated['certificat_url'] ?? null;
 		$user->video_url = $validated['video_url'] ?? null;
 		$user->score = $validated['score'] ?? null;
+		$user->course_link = $validated['course_link'] ?? null;
+		$user->course_login = $validated['course_login'] ?? null;
+		$user->course_password = $validated['course_password'] ?? null;
 
         if ($validated['password'])
             $user->password = $validated['password'];

@@ -38,6 +38,9 @@ class UpdateUserRequest extends FormRequest
             'certificat_url' => 'nullable|string',
 			'video_url' => 'nullable|string',
 			'score' => 'nullable|integer',
+			'course_link' => 'nullable|string',
+			'course_login' => 'nullable|string',
+			'course_password' => 'nullable|string',
 
         ];
     }
