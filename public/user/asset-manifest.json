@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "https://app.novaworkonline.com/user/static/css/main.ffe982d4.css",
-    "main.js": "https://app.novaworkonline.com/user/static/js/main.664f1594.js",
+    "main.js": "https://app.novaworkonline.com/user/static/js/main.8dd67284.js",
     "static/js/787.e5b964db.chunk.js": "https://app.novaworkonline.com/user/static/js/787.e5b964db.chunk.js",
     "static/media/fontawesome-webfont.svg?v=4.7.0": "https://app.novaworkonline.com/user/static/media/fontawesome-webfont.c1e38fd9e0e74ba58f7a.svg",
     "static/media/ionicons.svg?v=2.0.0": "https://app.novaworkonline.com/user/static/media/ionicons.b45d332f6829d6813600.svg",
@@ -17,11 +17,11 @@
     "static/media/img0.jpg": "https://app.novaworkonline.com/user/static/media/img0.43435a66a8cb16bdf9ee.jpg",
     "index.html": "https://app.novaworkonline.com/user/index.html",
     "main.ffe982d4.css.map": "https://app.novaworkonline.com/user/static/css/main.ffe982d4.css.map",
-    "main.664f1594.js.map": "https://app.novaworkonline.com/user/static/js/main.664f1594.js.map",
+    "main.8dd67284.js.map": "https://app.novaworkonline.com/user/static/js/main.8dd67284.js.map",
     "787.e5b964db.chunk.js.map": "https://app.novaworkonline.com/user/static/js/787.e5b964db.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.ffe982d4.css",
-    "static/js/main.664f1594.js"
+    "static/js/main.8dd67284.js"
   ]
 }
